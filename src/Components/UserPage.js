@@ -6,6 +6,7 @@ import IncomeModal from './Income_modal'
 import { budgetDb } from '../firebase/firebase'
 import FireBaseContext from '../firebase/FirebaseContext'
 import ExpenseList from './Expense_List'
+import IncomeCheckingModal from './Income_Check'
 
 
 function UserPage() {
@@ -36,7 +37,6 @@ function UserPage() {
       return 0
     })
       .reduce((sum, value) => sum + value, 0)
-    console.log(expenses);
 
     var incomes = userBudget.map((incomes) => {
       if (typeof incomes.income == "string") {
@@ -47,7 +47,6 @@ function UserPage() {
       .reduce((sum, value) => sum + value, 0)
   }
 
-  console.log(incomes);
 
   const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
   function openExpenseModal() {
@@ -63,17 +62,25 @@ function UserPage() {
   function closeIncomeModal() {
     setIncomeModalIsOpen(false);
   }
+  const [incomeCheckIsOpen, setIncomeCheckIsOpen] = React.useState(false)
+  function openIncomeCheckModal() {
+    setIncomeCheckIsOpen(true)
+  }
+  function closeIncomeCheckModal() {
+    setIncomeCheckIsOpen(false);
+  }
 
   return (
     <React.Fragment>
       <button onClick={openExpenseModal}>Kiadás</button>
       <button onClick={openIncomeModal}>Bevétel</button>
 
-  <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
-      <p> Látszon mennyi az elkölthető pénze (egyenleg)</p>
+      <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
+      <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
       <p>Költések:</p>
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
         <ExpenseList />
+        <IncomeCheckingModal user ={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
       </FireBaseContext.Provider>
 
 
