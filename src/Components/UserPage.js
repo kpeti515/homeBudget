@@ -28,7 +28,26 @@ function UserPage() {
 
     return () => unsubscribeUserBudget()
   }, [id])
+  if (userBudget) {
+    var expenses = userBudget.map((expenses) => {
+      if (typeof expenses.expense == "string") {
+        return parseInt(expenses.expense, 10)
+      }
+      return 0
+    })
+      .reduce((sum, value) => sum + value, 0)
+    console.log(expenses);
 
+    var incomes = userBudget.map((incomes) => {
+      if (typeof incomes.income == "string") {
+        return parseInt(incomes.income, 10)
+      }
+      return 0
+    })
+      .reduce((sum, value) => sum + value, 0)
+  }
+
+  console.log(incomes);
 
   const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
   function openExpenseModal() {
@@ -50,14 +69,14 @@ function UserPage() {
       <button onClick={openExpenseModal}>Kiadás</button>
       <button onClick={openIncomeModal}>Bevétel</button>
 
-      <h3>{id} pénztárcája:</h3>
+  <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
       <p> Látszon mennyi az elkölthető pénze (egyenleg)</p>
       <p>Költések:</p>
-      <FireBaseContext.Provider value={{userBudget, dispatch}}>
-      <ExpenseList/>
+      <FireBaseContext.Provider value={{ userBudget, dispatch }}>
+        <ExpenseList />
       </FireBaseContext.Provider>
-     
-      
+
+
       <ExpenseModal user={id} isOpen={expenseModalIsOpen} onRequestClose={closeExpenseModal} />
       <IncomeModal user={id} isOpen={incomeModalIsOpen} onRequestClose={closeIncomeModal} />
     </React.Fragment>
