@@ -7,7 +7,9 @@ import { budgetDb } from '../firebase/firebase'
 import FireBaseContext from '../firebase/FirebaseContext'
 import BudgetHistory from './Budget_History'
 import IncomeCheckingModal from './Income_Check'
-
+import numeral from 'numeral'
+require('numeral/locales/hu')
+numeral.locale('hu')
 
 function UserPage() {
   let { id } = useParams()
@@ -68,33 +70,33 @@ function UserPage() {
 
   const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
   function openExpenseModal() {
-    setExpenseModalIsOpen(true);
+    setExpenseModalIsOpen(true)
   }
   function closeExpenseModal() {
-    setExpenseModalIsOpen(false);
+    setExpenseModalIsOpen(false)
   }
   const [incomeModalIsOpen, setIncomeModalIsOpen] = React.useState(false);
   function openIncomeModal() {
-    setIncomeModalIsOpen(true);
+    setIncomeModalIsOpen(true)
   }
   function closeIncomeModal() {
-    setIncomeModalIsOpen(false);
+    setIncomeModalIsOpen(false)
   }
   const [incomeCheckIsOpen, setIncomeCheckIsOpen] = React.useState(false)
   function openIncomeCheckModal() {
     setIncomeCheckIsOpen(true)
   }
   function closeIncomeCheckModal() {
-    setIncomeCheckIsOpen(false);
+    setIncomeCheckIsOpen(false)
   }
-  const [sortType, setSortType] = React.useState('date');
+  const [sortType, setSortType] = React.useState('date')
 
   return (
     <React.Fragment>
       <button onClick={openExpenseModal}>Kiadás</button>
       <button onClick={openIncomeModal}>Bevétel</button>
 
-      <h3>{id} pénztárcája: {id === 'Lori' ? incomes - expenses - incomeForCloth : incomes - expenses} HUF</h3>
+      <h3>{id} pénztárcája: {id === 'Lori' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}</h3>
       {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} Ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
       <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
       <p>Számlatörténet:</p>

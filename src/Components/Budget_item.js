@@ -2,7 +2,10 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import IncomeModal from './Income_modal'
 import ExpenseModal from './Expense_modal'
-
+import '../css/colorization.css'
+import numeral from 'numeral'
+require('numeral/locales/hu')
+numeral.locale('hu')
 
 const BudgetItem = ({
   budget
@@ -19,7 +22,9 @@ const BudgetItem = ({
   if (budget.income) {
     return (
       <React.Fragment>
-        <p>{budget.date}  <b>+{budget.income} HUF</b> - {budget.reason} <button onClick={openModal}>Módosítás</button></p>
+        <p>
+          {budget.date}  <b className="income">+{numeral(budget.income).format('0,0[.]00 $')}</b> - {budget.reason} <button onClick={openModal}>Módosítás</button>
+        </p>
         <IncomeModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
       </React.Fragment>
     )
@@ -27,7 +32,7 @@ const BudgetItem = ({
   return (
     <React.Fragment>
       <p>
-        {budget.date}  <b>-{budget.expense} HUF</b> - {budget.item} <button onClick={openModal}>Módosítás</button>
+        {budget.date}  <b className="expense">-{numeral(budget.expense).format('0,0[.]00 $')}</b> - {budget.item} <button onClick={openModal}>Módosítás</button>
       </p>
       <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
     </React.Fragment>
