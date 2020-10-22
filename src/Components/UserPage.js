@@ -5,7 +5,7 @@ import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
 import { budgetDb } from '../firebase/firebase'
 import FireBaseContext from '../firebase/FirebaseContext'
-import ExpenseList from './Expense_List'
+import BudgetHistory from './Budget_History'
 import IncomeCheckingModal from './Income_Check'
 
 
@@ -77,9 +77,9 @@ function UserPage() {
 
       <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
       <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
-      <p>Költések:</p>
+      <p>Számlatörténet:</p>
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-        <ExpenseList />
+        <BudgetHistory />
         <IncomeCheckingModal user ={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
       </FireBaseContext.Provider>
 

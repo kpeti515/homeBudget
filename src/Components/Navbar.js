@@ -21,6 +21,9 @@ function Navbar() {
           <li>
             <Link to="/Lori">Lóri</Link>
           </li>
+          <li>
+            <Link to="/Teszt">Teszt</Link>
+          </li>
         </ul>
 
         <Switch>
