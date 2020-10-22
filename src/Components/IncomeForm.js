@@ -1,12 +1,14 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { budgetDb } from '../firebase/firebase'
+import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 import ItemDeleteModal from './Delete_Modal'
 
 const IncomeForm = (props) => {
 
   const { handleSubmit, register } = useForm()
+  let { id } = useParams()
   const [deleteModalIsOpen, setDeleteModalIsOpen] = React.useState(false);
   function openDeleteModal(e) {
     e.preventDefault()
@@ -23,9 +25,9 @@ const IncomeForm = (props) => {
     const inputs = {
       'income': data.income,
       'reason': data.reason,
-      'date': data.date
+      'date': data.date,
+      'isIncomeForCloth': data.isIncomeForCloth ? true : false
     }
-    console.log(inputs, props.user);
     if (props.defaultValues) {
       await docRef.update({
         ...inputs
@@ -40,8 +42,9 @@ const IncomeForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h3>{props.defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}</h3>
       <input
-      defaultValue={props.defaultValues && props.defaultValues.income}
+        defaultValue={props.defaultValues && props.defaultValues.income}
         type="number"
         placeholder="Bevétel összege"
         ref={register}
@@ -50,23 +53,41 @@ const IncomeForm = (props) => {
         name="income"
       />
       <input
-      defaultValue={props.defaultValues && props.defaultValues.reason}
+        defaultValue={props.defaultValues && props.defaultValues.reason}
         type="text"
         placeholder="Magyarázat"
         ref={register}
         required
         name="reason"
       />
-      <input
-      defaultValue={props.defaultValues && props.defaultValues.date}
+      <div>
+        <label htmlFor="incomeDate">Dátum:</label>
+        <input
+          defaultValue={props.defaultValues && props.defaultValues.date}
+          id="incomeDate"
           type="date"
           name="date"
+          required
           ref={register}
         />
-      <button>{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</button>
+      </div>
+      { id === 'Lori' &&
+        <div>
+          <label htmlFor="isIncomeForCloth">Ruhapénzhez tartozik?</label>
+          <input
+            defaultChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
+            id="isIncomeForCloth"
+            type="checkbox"
+            name="isIncomeForCloth"
+            ref={register}
+          />
+        </div>
+      }
+
+      {props.defaultValues && <button onClick={openDeleteModal}>Törlés</button>}
       <button onClick={props.onRequestClose}>Mégse</button>
-      {props.defaultValues && <button  onClick={openDeleteModal}>Törlés</button>}
-      {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose}/>}
+      {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
+      <button>{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</button>
     </form>
   )
 }

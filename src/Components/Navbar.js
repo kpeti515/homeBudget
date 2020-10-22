@@ -11,24 +11,24 @@ import UserPage from "./UserPage";
 function Navbar() {
   return (
     <Router>
-        <ul>
-          <li>
-            <Link to="/">Áttekintés</Link>
-          </li>
-          <li>
-            <Link to="/Andi">Andi</Link>
-          </li>
-          <li>
-            <Link to="/Lori">Lóri</Link>
-          </li>
-          <li>
-            <Link to="/Teszt">Teszt</Link>
-          </li>
-        </ul>
+      <ul>
+        <li>
+          <Link to="/">Áttekintés</Link>
+        </li>
+        <li>
+          <Link to="/Andi">Andi</Link>
+        </li>
+        <li>
+          <Link to="/Lori">Lóri</Link>
+        </li>
+        <li>
+          <Link to="/Teszt">Teszt</Link>
+        </li>
+      </ul>
 
-        <Switch>
-          <Route path="/:id" children={<UserPage />} />
-        </Switch>
+      <Switch>
+        <Route path="/:id" children={<UserPage />} />
+      </Switch>
     </Router>
   );
 }

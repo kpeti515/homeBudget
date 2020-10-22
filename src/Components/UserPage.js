@@ -31,7 +31,7 @@ function UserPage() {
   }, [id])
   if (userBudget) {
     var expenses = userBudget.map((expenses) => {
-      if (typeof expenses.expense == "string") {
+      if (typeof expenses.expense == "string" && expenses.isIncomeForCloth !== true) {
         return parseInt(expenses.expense, 10)
       }
       return 0
@@ -39,12 +39,30 @@ function UserPage() {
       .reduce((sum, value) => sum + value, 0)
 
     var incomes = userBudget.map((incomes) => {
-      if (typeof incomes.income == "string") {
+      if (typeof incomes.income == "string" && expenses.isIncomeForCloth !== true) {
         return parseInt(incomes.income, 10)
       }
       return 0
     })
       .reduce((sum, value) => sum + value, 0)
+
+    var expenseForCloth = userBudget.map((expenses) => {
+      if (typeof expenses.expense == "string" && expenses.isIncomeForCloth === true) {
+        return parseInt(expenses.expense, 10)
+      }
+      return 0
+    })
+      .reduce((sum, value) => sum + value, 0)
+    console.log(expenseForCloth)
+
+    var incomeForCloth = userBudget.map((income) => {
+      if (typeof income.income == "string" && income.isIncomeForCloth === true) {
+        return parseInt(income.income, 10)
+      }
+      return 0
+    })
+      .reduce((sum, value) => sum + value, 0)
+    console.log(incomeForCloth)
   }
 
 
@@ -76,7 +94,8 @@ function UserPage() {
       <button onClick={openExpenseModal}>Kiadás</button>
       <button onClick={openIncomeModal}>Bevétel</button>
 
-      <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
+      <h3>{id} pénztárcája: {id === 'Lori' ? incomes - expenses - incomeForCloth : incomes - expenses} HUF</h3>
+      {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} Ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
       <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
       <p>Számlatörténet:</p>
 
@@ -85,7 +104,7 @@ function UserPage() {
         <option value="amount">Összeg alapján</option>
       </select>
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-        <BudgetHistory sortBy={sortType}/>
+        <BudgetHistory sortBy={sortType} />
         <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
       </FireBaseContext.Provider>
 
