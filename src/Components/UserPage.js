@@ -69,6 +69,7 @@ function UserPage() {
   function closeIncomeCheckModal() {
     setIncomeCheckIsOpen(false);
   }
+  const [sortType, setSortType] = React.useState('date');
 
   return (
     <React.Fragment>
@@ -78,9 +79,14 @@ function UserPage() {
       <h3>{id} pénztárcája: {incomes - expenses} HUF</h3>
       <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
       <p>Számlatörténet:</p>
+
+      <select onChange={(e) => setSortType(e.target.value)}>
+        <option value="date">Dátum alapján</option>
+        <option value="amount">Összeg alapján</option>
+      </select>
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-        <BudgetHistory />
-        <IncomeCheckingModal user ={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
+        <BudgetHistory sortBy={sortType}/>
+        <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
       </FireBaseContext.Provider>
 
 
