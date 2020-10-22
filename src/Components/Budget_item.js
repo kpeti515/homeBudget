@@ -19,19 +19,17 @@ const BudgetItem = ({
   if (budget.income) {
     return (
       <React.Fragment>
-        <a onClick={openModal}>
-          <p>{budget.date}  <b>+{budget.income} HUF</b> - {budget.reason}</p>
-        </a>
-        <IncomeModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal}/>
+        <p>{budget.date}  <b>+{budget.income} HUF</b> - {budget.reason} <button onClick={openModal}>Módosítás</button></p>
+        <IncomeModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
       </React.Fragment>
     )
   }
   return (
     <React.Fragment>
-      <a onClick={openModal}>
-        <p>{budget.date}  <b>-{budget.expense} HUF</b> - {budget.item}</p>
-      </a>
-      <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal}/>
+      <p>
+        {budget.date}  <b>-{budget.expense} HUF</b> - {budget.item} <button onClick={openModal}>Módosítás</button>
+      </p>
+      <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
     </React.Fragment>
   )
 }
