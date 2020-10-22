@@ -5,7 +5,9 @@ import FirebaseContext from '../firebase/FirebaseContext'
 const BudgetHistory = () => {
   const { userBudget } = useContext(FirebaseContext)
 
-  return userBudget.map((budget) => (
+  return userBudget
+  .sort((a,b) => b.date.localeCompare(a.date))
+  .map((budget) => (
      <BudgetItem key={budget.id} budget={budget} />
   ))
 }
