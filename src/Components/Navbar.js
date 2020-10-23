@@ -56,7 +56,7 @@ function Navbar(props) {
             flexGrow={1}
           >
             <MenuItems><Link to="/Andi" onClick={handleToggle}>Andi</Link></MenuItems>
-            <MenuItems><Link to="/Lori" onClick={handleToggle}>Lóri</Link></MenuItems>
+            <MenuItems><Link to="/Lóri" onClick={handleToggle}>Lóri</Link></MenuItems>
             <MenuItems><Link to="/Teszt" onClick={handleToggle}>Teszt</Link></MenuItems>
           </Box>
 

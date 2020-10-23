@@ -73,7 +73,7 @@ const IncomeForm = (props) => {
           ref={register}
         />
       </div>
-      { id === 'Lori' &&
+      { id === 'Lóri' &&
         <div>
           <label htmlFor="isIncomeForCloth">Ruhapénzhez tartozik?</label>
           <input
