@@ -1,13 +1,16 @@
 import React, { useReducer, useEffect } from 'react'
 import budgetReducer from '../Reducers/budgetReducer'
 import { useParams } from 'react-router-dom'
+import numeral from 'numeral'
+import { Button } from "@chakra-ui/core"
+
 import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
 import { budgetDb } from '../firebase/firebase'
 import FireBaseContext from '../firebase/FirebaseContext'
 import BudgetHistory from './Budget_History'
 import IncomeCheckingModal from './Income_Check'
-import numeral from 'numeral'
+
 require('numeral/locales/hu')
 numeral.locale('hu')
 
@@ -93,12 +96,12 @@ function UserPage() {
 
   return (
     <React.Fragment>
-      <button onClick={openExpenseModal}>Kiadás</button>
-      <button onClick={openIncomeModal}>Bevétel</button>
+      <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal}>Kiadás</Button>
+      <Button leftIcon="add" variantColor="green" onClick={openIncomeModal}>Bevétel</Button>
 
       <h3>{id} pénztárcája: {id === 'Lori' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}</h3>
       {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} Ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
-      <button onClick={openIncomeCheckModal}>Bevételek ellenőrzése</button>
+      <Button leftIcon="view" onClick={openIncomeCheckModal}>Bevételek ellenőrzése</Button>
       <p>Számlatörténet:</p>
 
       <select onChange={(e) => setSortType(e.target.value)}>

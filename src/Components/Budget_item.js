@@ -1,5 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { Button } from "@chakra-ui/core"
+
 import IncomeModal from './Income_modal'
 import ExpenseModal from './Expense_modal'
 import '../css/colorization.css'
@@ -23,7 +25,7 @@ const BudgetItem = ({
     return (
       <React.Fragment>
         <p>
-          {budget.date}  <b className="income">+{numeral(budget.income).format('0,0[.]00 $')}</b> - {budget.reason} <button onClick={openModal}>Módosítás</button>
+          {budget.date}  <b className="income">+{numeral(budget.income).format('0,0[.]00 $')}</b> - {budget.reason} <Button leftIcon="edit" variantColor="yellow" onClick={openModal}>Módosítás</Button>
         </p>
         <IncomeModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
       </React.Fragment>
@@ -32,7 +34,7 @@ const BudgetItem = ({
   return (
     <React.Fragment>
       <p>
-        {budget.date}  <b className="expense">-{numeral(budget.expense).format('0,0[.]00 $')}</b> - {budget.item} <button onClick={openModal}>Módosítás</button>
+        {budget.date}  <b className="expense">-{numeral(budget.expense).format('0,0[.]00 $')}</b> - {budget.item} <Button leftIcon="edit" variantColor="yellow" onClick={openModal}>Módosítás</Button>
       </p>
       <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
     </React.Fragment>

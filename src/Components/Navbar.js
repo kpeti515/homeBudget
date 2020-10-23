@@ -5,31 +5,70 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import { Box, Heading, Flex, Text } from "@chakra-ui/core";
 import UserPage from "./UserPage";
 
+const MenuItems = ({ children }) => (
+  <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
+    {children}
+  </Text>
+)
 
-function Navbar() {
+function Navbar(props) {
+  const [show, setShow] = React.useState(false);
+  const handleToggle = () => setShow(!show);
   return (
+    <>
     <Router>
-      <ul>
-        <li>
-          <Link to="/">Áttekintés</Link>
-        </li>
-        <li>
-          <Link to="/Andi">Andi</Link>
-        </li>
-        <li>
-          <Link to="/Lori">Lóri</Link>
-        </li>
-        <li>
-          <Link to="/Teszt">Teszt</Link>
-        </li>
-      </ul>
+      <Flex
+        as="nav"
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        padding="1.5rem"
+        bg="teal.500"
+        color="white"
+        {...props}
+      >
+        <Flex align="center" mr={5}>
+          <Heading as="h1" size="lg" letterSpacing={"-.1rem"}>
+          <Link to="/">Zsebpénz app</Link>
+        </Heading>
+        </Flex>
 
-      <Switch>
-        <Route path="/:id" children={<UserPage />} />
-      </Switch>
-    </Router>
+        <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
+          <svg
+            fill="white"
+            width="12px"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </Box>
+
+        <Box
+          display={{ sm: show ? "block" : "none", md: "flex" }}
+          width={{ sm: "full", md: "auto" }}
+          alignItems="center"
+          flexGrow={1}
+        >
+          <MenuItems><Link to="/Andi">Andi</Link></MenuItems>
+          <MenuItems><Link to="/Lori">Lóri</Link></MenuItems>
+          <MenuItems><Link to="/Teszt">Teszt</Link></MenuItems>
+        </Box>
+
+        
+      </Flex>
+      
+  
+
+        <Switch>
+          <Route path="/:id" children={<UserPage />} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

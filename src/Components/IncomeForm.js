@@ -1,5 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Button } from "@chakra-ui/core"
+
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
@@ -84,10 +86,10 @@ const IncomeForm = (props) => {
         </div>
       }
 
-      {props.defaultValues && <button onClick={openDeleteModal}>Törlés</button>}
-      <button onClick={props.onRequestClose}>Mégse</button>
+      {props.defaultValues && <Button variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
+      <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
       {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
-      <button>{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</button>
+      <Button variantColor="green" leftIcon="check">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
     </form>
   )
 }
