@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import budgetReducer from '../Reducers/budgetReducer'
 import { useParams } from 'react-router-dom'
 import numeral from 'numeral'
-import { Button } from "@chakra-ui/core"
+import { Button, Heading } from "@chakra-ui/core"
 
 import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
@@ -58,7 +58,6 @@ function UserPage() {
       return 0
     })
       .reduce((sum, value) => sum + value, 0)
-    console.log(expenseForCloth)
 
     var incomeForCloth = userBudget.map((income) => {
       if (typeof income.income == "string" && income.isIncomeForCloth === true) {
@@ -67,7 +66,6 @@ function UserPage() {
       return 0
     })
       .reduce((sum, value) => sum + value, 0)
-    console.log(incomeForCloth)
   }
 
 
@@ -96,11 +94,12 @@ function UserPage() {
 
   return (
     <React.Fragment>
+
+      <Heading as="h3" size="lg">{id} pénztárcája: {id === 'Lori' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}</Heading>
+      {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} Ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
       <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal}>Kiadás</Button>
       <Button leftIcon="add" variantColor="green" onClick={openIncomeModal}>Bevétel</Button>
 
-      <h3>{id} pénztárcája: {id === 'Lori' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}</h3>
-      {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} Ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
       <Button leftIcon="view" onClick={openIncomeCheckModal}>Bevételek ellenőrzése</Button>
       <p>Számlatörténet:</p>
 

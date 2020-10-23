@@ -99,7 +99,7 @@ const ExpenseForm = (props) => {
       {props.defaultValues && <Button variantColor="red" onClick={openDeleteModal}>Törlés</Button>}
       <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
       {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
-      <Button variantColor="green" leftIcon="check">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+      <Button variantColor="green" leftIcon="check"type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
     </form>
   )
 
