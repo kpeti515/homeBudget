@@ -21,8 +21,8 @@ const ItemDeleteModal = (props) => {
 
     >
       <p>Valóban törölni szeretnéd ezt a tételt?</p>
-      <Button onClick={props.onRequestCloseDeleteModal}>Mégse</Button>
-      <Button onClick={deleteItem}>Törlés</Button>
+      <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestCloseDeleteModal}>Mégse</Button>
+      <Button variantColor="red" leftIcon="delete" onClick={deleteItem}>Törlés</Button>
     </Modal>
   )
 }

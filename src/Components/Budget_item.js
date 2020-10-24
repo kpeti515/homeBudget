@@ -2,13 +2,12 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import {
   Button,
-  Icon,
   Stat,
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatArrow,
-  StatGroup,
+  Box,
+  Flex,
 } from "@chakra-ui/core"
 
 import IncomeModal from './Income_modal'
@@ -36,10 +35,12 @@ const BudgetItem = ({
 
         <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
           <StatLabel>{budget.reason}</StatLabel>
-          <StatNumber fontSize={20}>
-          +{numeral(budget.income).format('0,0[.]00 $')}
+          <Box display={Flex} justifyContent="space-between">
+            <StatNumber fontSize={20}>
+              +{numeral(budget.income).format('0,0[.]00 $')}
+            </StatNumber>
             <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
-          </StatNumber>
+          </Box>
           <StatHelpText>{budget.date}</StatHelpText>
         </Stat>
         <IncomeModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
@@ -50,11 +51,14 @@ const BudgetItem = ({
     <React.Fragment>
       <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
         <StatLabel>{budget.item}</StatLabel>
-        <StatNumber fontSize={20}>
-          -{numeral(budget.expense).format('0,0[.]00 $')}
+        <Box display={Flex} justifyContent="space-between">
+          <StatNumber fontSize={20}>
+            -{numeral(budget.expense).format('0,0[.]00 $')}
+          </StatNumber>
           <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
-        </StatNumber>
+        </Box>
         <StatHelpText>{budget.date}</StatHelpText>
+
       </Stat>
       <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
     </React.Fragment>
