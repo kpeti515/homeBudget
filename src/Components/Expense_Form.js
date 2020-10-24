@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Button } from "@chakra-ui/core"
+import { Button, FormControl, FormLabel, Input, Checkbox, Heading } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
@@ -34,6 +34,7 @@ const ExpenseForm = (props) => {
       'date': data.date,
       'isIncomeForCloth': data.isIncomeForCloth ? true : false
     }
+    console.log(inputs);
     if (props.defaultValues) {
       await docRef.update({
         ...inputs
@@ -48,53 +49,67 @@ const ExpenseForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h3>{props.defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}</h3>
-      <input
-        defaultValue={props.defaultValues && props.defaultValues.expense}
-        type="number"
-        placeholder="Kiadás összege"
-        ref={register}
-        required
-        autoFocus
-        name="expense"
-      />
-      <input
-        defaultValue={props.defaultValues && props.defaultValues.item}
-        type="text"
-        placeholder="Tárgy"
-        ref={register}
-        required
-        name="item"
-      />
-      <input
-        defaultValue={props.defaultValues && props.defaultValues.description}
-        type="text"
-        placeholder="Megjegyzés"
-        ref={register}
-        name="description"
-      />
-      <div>
-        <label htmlFor="incomeDate">Dátum:</label>
-        <input
+      <Heading as="h3" size="lg" my={2}>{props.defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}</Heading>
+      <FormControl isRequired my={2}>
+        <FormLabel htmlFor="expense">Összeg:</FormLabel>
+        <Input
+          defaultValue={props.defaultValues && props.defaultValues.expense}
+          id="expense"
+          placeholder="Kiadás összege"
+          type="number"
+          ref={register}
+          name="expense"
+          autoFocus
+        />
+      </FormControl>
+
+      <FormControl isRequired my={2}>
+        <FormLabel htmlFor="item">Tárgy</FormLabel>
+        <Input id="item"
+          defaultValue={props.defaultValues && props.defaultValues.item}
+          type="text"
+          placeholder="Tárgy"
+          ref={register}
+          required
+          name="item"
+        />
+      </FormControl>
+
+      <FormControl my={2}>
+        <FormLabel htmlFor="description">Megjegyzés</FormLabel>
+        <Input
+          id="description"
+          defaultValue={props.defaultValues && props.defaultValues.description}
+          type="text"
+          placeholder="Megjegyzés"
+          ref={register}
+          name="description"
+        />
+      </FormControl>
+
+      <FormControl isRequired my={2}>
+        <FormLabel htmlFor="date">Dátum:</FormLabel>
+        <Input
           defaultValue={props.defaultValues && props.defaultValues.date}
-          id="incomeDate"
+          id="date"
+          placeholder="Kiadás összege"
           type="date"
           name="date"
           required
           ref={register}
         />
-      </div>
+      </FormControl>
+
+
       { id === 'Lóri' &&
-        <div>
-          <label htmlFor="isIncomeForCloth">Ruhapénzhez tartozik?</label>
-          <input
-            defaultChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
-            id="isIncomeForCloth"
-            type="checkbox"
+          <Checkbox
+            defaultIsChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
             name="isIncomeForCloth"
             ref={register}
-          />
-        </div>
+            my={2}
+          >
+            Ruhapénzhez tartozik
+      </Checkbox>
       }
       {props.defaultValues && <Button variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
       <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
