@@ -94,31 +94,31 @@ function UserPage() {
 
   return (
     <React.Fragment>
-      
-          <Heading as="h3" size="lg" m={2}>
-            {id} pénztárcája: {id === 'Lóri' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}
-          </Heading>
-          {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
-          <Box display="flex" flexWrap="wrap" justifyContent="center">
-            <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
-            <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
-            <Button leftIcon="view" onClick={openIncomeCheckModal} m={2} height="3rem" width="70%" >Bevételek ellenőrzése</Button>
-          </Box>
-          <Box display="flex">
-          <Text m={2}>Számlatörténet:</Text>
-          <select onChange={(e) => setSortType(e.target.value)}>
-            <option value="date">Dátum alapján</option>
-            <option value="amount">Összeg alapján</option>
-          </select>
-          </Box>
-          <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-            <BudgetHistory sortBy={sortType} />
-            <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
-          </FireBaseContext.Provider>
+
+      <Heading as="h3" size="lg" m={2}>
+        {id} pénztárcája: {id === 'Lóri' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}
+      </Heading>
+      {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
+      <Box display="flex" flexWrap="wrap" justifyContent="center">
+        <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
+        <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
+        <Button leftIcon="view" onClick={openIncomeCheckModal} m={2} height="3rem" width="70%" >Bevételek ellenőrzése</Button>
+      </Box>
+      <Box display="flex">
+        <Text m={2}>Számlatörténet:</Text>
+        <select onChange={(e) => setSortType(e.target.value)}>
+          <option value="date">Dátum alapján</option>
+          <option value="amount">Összeg alapján</option>
+        </select>
+      </Box>
+      <FireBaseContext.Provider value={{ userBudget, dispatch }}>
+        <BudgetHistory sortBy={sortType} />
+        <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
+      </FireBaseContext.Provider>
 
 
-          <ExpenseModal user={id} isOpen={expenseModalIsOpen} onRequestClose={closeExpenseModal} />
-          <IncomeModal user={id} isOpen={incomeModalIsOpen} onRequestClose={closeIncomeModal} />
+      <ExpenseModal user={id} isOpen={expenseModalIsOpen} onRequestClose={closeExpenseModal} />
+      <IncomeModal user={id} isOpen={incomeModalIsOpen} onRequestClose={closeIncomeModal} />
 
     </React.Fragment>
   )
