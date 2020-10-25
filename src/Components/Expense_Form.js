@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, FormControl, FormLabel, Input, Checkbox, Heading } from "@chakra-ui/core"
+import { Box, Button, FormControl, FormLabel, Input, Checkbox, Heading } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
@@ -102,19 +102,23 @@ const ExpenseForm = (props) => {
 
 
       { id === 'Lóri' &&
-          <Checkbox
-            defaultIsChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
-            name="isIncomeForCloth"
-            ref={register}
-            my={2}
-          >
-            Ruhapénzhez tartozik
+        <Checkbox
+          defaultIsChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
+          name="isIncomeForCloth"
+          ref={register}
+          my={2}
+        >
+          Ruhapénzhez tartozik
       </Checkbox>
       }
-      {props.defaultValues && <Button variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
-      <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
-      {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
-      <Button variantColor="green" leftIcon="check" type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+      <Box display="flex" justifyContent="center">
+        <Box display="flex" flexDirection="column" minWidth="80%">
+          {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
+          <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
+          {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
+          <Button m={2} variantColor="green" leftIcon="check" type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+        </Box>
+      </Box>
     </form>
   )
 

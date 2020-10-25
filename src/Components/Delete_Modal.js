@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal'
-import { Button } from "@chakra-ui/core"
+import { Box, Button } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 
@@ -21,8 +21,12 @@ const ItemDeleteModal = (props) => {
 
     >
       <p>Valóban törölni szeretnéd ezt a tételt?</p>
-      <Button variantColor="yellow" leftIcon="close" onClick={props.onRequestCloseDeleteModal}>Mégse</Button>
-      <Button variantColor="red" leftIcon="delete" onClick={deleteItem}>Törlés</Button>
+      <Box display="flex" justifyContent="center"> 
+        <Box display="flex" flexDirection="column" minWidth="80%">
+      <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestCloseDeleteModal}>Mégse</Button>
+      <Button m={2} variantColor="red" leftIcon="delete" onClick={deleteItem}>Törlés</Button>
+      </Box>
+      </Box>
     </Modal>
   )
 }
