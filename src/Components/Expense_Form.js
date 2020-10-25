@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, Button, FormControl, FormLabel, Input, Checkbox, Heading } from "@chakra-ui/core"
+import { Box, Button, FormControl, FormLabel, Input, Checkbox, Heading, useToast } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
@@ -20,11 +20,11 @@ const ExpenseForm = (props) => {
   function closeDeleteModal() {
     setDeleteModalIsOpen(false);
   }
-
+  const toast = useToast()
   const onSubmit = async (data) => {
 
     const itemName = props.defaultValues ? props.defaultValues.id : uuidv4()
-
+    
     let docRef = budgetDb.collection(`${props.user}`).doc(itemName)
 
     const inputs = {
@@ -34,7 +34,6 @@ const ExpenseForm = (props) => {
       'date': data.date,
       'isIncomeForCloth': data.isIncomeForCloth ? true : false
     }
-    console.log(inputs);
     if (props.defaultValues) {
       await docRef.update({
         ...inputs
@@ -45,6 +44,12 @@ const ExpenseForm = (props) => {
       })
     }
     props.onRequestClose()
+    toast({
+      title: "Mentve.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    })
   }
 
   return (

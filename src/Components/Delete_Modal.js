@@ -1,15 +1,22 @@
 import React from 'react';
 import Modal from 'react-modal'
-import { Box, Button } from "@chakra-ui/core"
+import { Box, Button, useToast } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 
 Modal.setAppElement('#root')
 const ItemDeleteModal = (props) => {
+  const toast = useToast()
   const deleteItem = async () => {
     props.onRequestCloseDeleteModal()
     props.closePreviousModal()
     await budgetDb.collection(`${props.user}`).doc(`${props.id}`).delete()
+    toast({
+      title: "Törölve.",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    })
 
   }
   return (
