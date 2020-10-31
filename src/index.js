@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { theme, ThemeProvider, CSSReset } from '@chakra-ui/core'
+import { theme, ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -18,9 +18,11 @@ const newTheme = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={newTheme}>
+    <ThemeProvider theme={newTheme} >
       <CSSReset />
-      <App />
+      <ColorModeProvider>
+        <App />
+      </ColorModeProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

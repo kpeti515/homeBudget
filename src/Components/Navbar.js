@@ -5,7 +5,7 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import { Box, Heading, Flex, Text } from "@chakra-ui/core";
+import { Box, IconButton, Heading, Flex, Text } from "@chakra-ui/core";
 import UserPage from "./UserPage";
 
 const MenuItems = ({ children }) => (
@@ -17,11 +17,13 @@ const MenuItems = ({ children }) => (
 function Navbar(props) {
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
-
+  // const { colorMode, toggleColorMode } = useColorMode();
+  // const bgColor = { light: "white.500", dark: "gray.900" };
+  // const color = { light: "black", dark: "white" };
   return (
     <>
-      <Router>
-        <Box display="flex" justifyContent="center">
+      <Router >
+        <Box bg={props.bgColor[props.colorMode]} color={props.color[props.colorMode]} display="flex" justifyContent="center">
           <Box width={[
             "100%", // base
             "100%", // 480px upwards
@@ -41,6 +43,7 @@ function Navbar(props) {
               <Flex align="center" mr={5}>
                 <Heading as="h1" size="lg" letterSpacing={"-.1rem"}>
                   <Link to="/">Zsebpénz app</Link>
+                  <IconButton bg="teal.500" mx={4} onClick={props.toggleColorMode} icon={props.colorMode === "light" ? "sun" : "moon"} />
                 </Heading>
               </Flex>
 
@@ -69,13 +72,13 @@ function Navbar(props) {
 
 
             </Flex>
-           
+
 
 
             <Switch>
               <Route path="/:id" children={<UserPage />} />
             </Switch>
-            </Box>
+          </Box>
         </Box>
       </Router>
     </>
