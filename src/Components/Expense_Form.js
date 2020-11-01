@@ -1,6 +1,15 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, Button, FormControl, FormLabel, Input, Checkbox, Heading, useToast } from "@chakra-ui/core"
+import { Box, 
+  Button,
+   FormControl,
+    FormLabel, 
+    Input, 
+    Checkbox, 
+     useToast , 
+     useDisclosure
+    } from "@chakra-ui/core"
+
 
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
@@ -12,14 +21,8 @@ const ExpenseForm = (props) => {
 
   const { handleSubmit, register } = useForm()
   let { id } = useParams()
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = React.useState(false);
-  function openDeleteModal(e) {
-    e.preventDefault()
-    setDeleteModalIsOpen(true);
-  }
-  function closeDeleteModal() {
-    setDeleteModalIsOpen(false);
-  }
+  const { isOpen, onOpen, onClose } = useDisclosure() // deleteModal
+
   const toast = useToast()
   const onSubmit = async (data) => {
 
@@ -54,7 +57,6 @@ const ExpenseForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading as="h3" size="lg" my={2}>{props.defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}</Heading>
       <FormControl isRequired my={2}>
         <FormLabel htmlFor="expense">Összeg:</FormLabel>
         <Input
@@ -118,9 +120,9 @@ const ExpenseForm = (props) => {
       }
       <Box display="flex" justifyContent="center">
         <Box display="flex" flexDirection="column" minWidth="80%">
-          {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
+          {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={onOpen}>Törlés</Button>}
           <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
-          {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
+          {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={isOpen} onRequestCloseDeleteModal={onClose} closePreviousModal={props.onRequestClose} />}
           <Button m={2} variantColor="green" leftIcon="check" type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
         </Box>
       </Box>

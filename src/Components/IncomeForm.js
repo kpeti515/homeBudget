@@ -2,16 +2,21 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { Box, Button, FormControl, FormLabel, Input, Checkbox, useToast, useColorMode, useDisclosure } from "@chakra-ui/core"
+import { Box, 
+  Button, 
+  FormControl, 
+  FormLabel,
+   Input, 
+   Checkbox, 
+   useToast, 
+   useDisclosure 
+  } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
 
 import ItemDeleteModal from './Delete_Modal'
 
 const IncomeForm = (props) => {
-  const { colorMode } = useColorMode()
-  const bgColor = { light: "white", dark: "gray.900" }
-  const color = { light: "black", dark: "white" }
 
   const { handleSubmit, register } = useForm()
   let { id } = useParams()
@@ -48,8 +53,7 @@ const IncomeForm = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} bg={bgColor[colorMode]}
-    color={color[colorMode]}>
+    <form onSubmit={handleSubmit(onSubmit)} >
         <FormControl isRequired my={2}>
           <FormLabel htmlFor="income">Összeg:</FormLabel>
           <Input
