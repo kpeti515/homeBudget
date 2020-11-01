@@ -18,8 +18,9 @@ require('numeral/locales/hu')
 numeral.locale('hu')
 
 const BudgetItem = ({
-  budget
+  budget, showExpenses, showIncomes
 }) => {
+  console.log(budget, showExpenses);
   let { id } = useParams()
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
@@ -29,7 +30,7 @@ const BudgetItem = ({
     setIsOpen(false);
   }
 
-  if (budget.income) {
+  if (budget.income && showIncomes === true) {
     return (
       <React.Fragment>
 
@@ -47,22 +48,26 @@ const BudgetItem = ({
       </React.Fragment>
     )
   }
-  return (
-    <React.Fragment>
-      <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
-        <StatLabel>{budget.item}</StatLabel>
-        <Box display={Flex} justifyContent="space-between">
-          <StatNumber fontSize={20}>
-            -{numeral(budget.expense).format('0,0[.]00 $')}
-          </StatNumber>
-          <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
-        </Box>
-        <StatHelpText>{budget.date}</StatHelpText>
-
-      </Stat>
-      <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
-    </React.Fragment>
-  )
+  if (budget.expense && showExpenses === true ) {
+    return (
+      <React.Fragment>
+        <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
+          <StatLabel>{budget.item}</StatLabel>
+          <Box display={Flex} justifyContent="space-between">
+            <StatNumber fontSize={20}>
+              -{numeral(budget.expense).format('0,0[.]00 $')}
+            </StatNumber>
+            <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
+          </Box>
+          <StatHelpText>{budget.date}</StatHelpText>
+  
+        </Stat>
+        <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
+      </React.Fragment>
+    )
+  }
+  else return null
+ 
 }
 
 export { BudgetItem as default }

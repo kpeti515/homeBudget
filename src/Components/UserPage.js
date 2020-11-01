@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import budgetReducer from '../Reducers/budgetReducer'
 import { useParams } from 'react-router-dom'
 import numeral from 'numeral'
-import { Button, Heading, Box, Text, Select } from "@chakra-ui/core"
+import { Button, Heading, Box, Text, Select, Switch, Flex, FormLabel } from "@chakra-ui/core"
 
 import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
@@ -68,6 +68,8 @@ function UserPage() {
       .reduce((sum, value) => sum + value, 0)
   }
 
+  const [showExpenses, changeShowExpenses] = React.useState(true)
+  const [showIncomes, changeShowIncomes] = React.useState(true)
 
   const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
   function openExpenseModal() {
@@ -83,13 +85,13 @@ function UserPage() {
   function closeIncomeModal() {
     setIncomeModalIsOpen(false)
   }
-  const [incomeCheckIsOpen, setIncomeCheckIsOpen] = React.useState(false)
-  function openIncomeCheckModal() {
-    setIncomeCheckIsOpen(true)
-  }
-  function closeIncomeCheckModal() {
-    setIncomeCheckIsOpen(false)
-  }
+  // const [incomeCheckIsOpen, setIncomeCheckIsOpen] = React.useState(false)
+  // function openIncomeCheckModal() {
+  //   setIncomeCheckIsOpen(true)
+  // }
+  // function closeIncomeCheckModal() {
+  //   setIncomeCheckIsOpen(false)
+  // }
   const [sortType, setSortType] = React.useState('date')
 
   return (
@@ -102,19 +104,26 @@ function UserPage() {
       <Box display="flex" flexWrap="wrap" justifyContent="center">
         <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
         <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
-        <Button leftIcon="view" onClick={openIncomeCheckModal} m={2} height="3rem" width="70%" >Bevételek ellenőrzése</Button>
+        {/* <Button leftIcon="view" onClick={openIncomeCheckModal} m={2} height="3rem" width="70%" >Bevételek ellenőrzése</Button> */}
       </Box>
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
         <Select onChange={(e) => setSortType(e.target.value)}>
-        <option value="date">Dátum alapján</option>
-          <option  value="amount">Összeg alapján</option>
+          <option value="date">Dátum alapján</option>
+          <option value="amount">Összeg alapján</option>
         </Select>
-
-      </Box>
+        </Box>
+        <Flex m={4} justify="center" align="center">
+          <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
+          <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)}/>
+          
+          <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
+          <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)}/>
+        </Flex>
+      
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-        <BudgetHistory sortBy={sortType} />
-        <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} />
+        <BudgetHistory showExpenses={showExpenses} showIncomes={showIncomes} sortBy={sortType} />
+        {/* <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} /> */}
       </FireBaseContext.Provider>
 
 
