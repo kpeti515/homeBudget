@@ -1,18 +1,42 @@
 import React from 'react';
-import Modal from 'react-modal'
+import {
+  useColorMode,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/core"
+
 import IncomeForm from './IncomeForm';
 
-Modal.setAppElement('#root')
 const IncomeModal = (props) => {
-  
+  const { colorMode } = useColorMode()
+  const bgColor = { light: "white.500", dark: "gray.900" };
+  const color = { light: "black", dark: "white" };
   return (
-    <Modal
-      isOpen={props.isOpen}
-      contentLabel="Kiadás"
-      onRequestClose={props.onRequestClose}
-    >
-      <IncomeForm {...props} />
-    </Modal>
+      <Modal
+bg={bgColor[colorMode]}
+      color={color[colorMode]}
+        isOpen={props.isOpen}
+        contentLabel="Kiadás"
+        onClose={props.onRequestClose}
+      >
+      <ModalOverlay />
+      <ModalContent>
+          <ModalHeader bg={bgColor[colorMode]}
+      color={color[colorMode]}>{props.defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}</ModalHeader>
+          <ModalCloseButton bg={bgColor[colorMode]}
+      color={color[colorMode]}/>
+          <ModalBody bg={bgColor[colorMode]}
+      color={color[colorMode]}>
+      
+        <IncomeForm {...props} />
+        </ModalBody>
+        </ModalContent>
+      </Modal>
   )
 }
 

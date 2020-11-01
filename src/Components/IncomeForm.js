@@ -1,24 +1,23 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, Button, FormControl, FormLabel, Input, Checkbox, Heading, useToast } from "@chakra-ui/core"
+import { useParams } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
+import { Box, Button, FormControl, FormLabel, Input, Checkbox, useToast, useColorMode, useDisclosure } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
-import { useParams } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid';
+
 import ItemDeleteModal from './Delete_Modal'
 
 const IncomeForm = (props) => {
+  const { colorMode } = useColorMode()
+  const bgColor = { light: "white", dark: "gray.900" }
+  const color = { light: "black", dark: "white" }
 
   const { handleSubmit, register } = useForm()
   let { id } = useParams()
-  const [deleteModalIsOpen, setDeleteModalIsOpen] = React.useState(false);
-  function openDeleteModal(e) {
-    e.preventDefault()
-    setDeleteModalIsOpen(true);
-  }
-  function closeDeleteModal() {
-    setDeleteModalIsOpen(false);
-  }
+
+  const { isOpen, onOpen, onClose } = useDisclosure() // deleteModal
+
   const toast = useToast()
   const onSubmit = async (data) => {
     const itemName = props.defaultValues ? props.defaultValues.id : uuidv4()
@@ -49,9 +48,8 @@ const IncomeForm = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      
-        <Heading as="h3" size="lg" my={2}>{props.defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}</Heading>
+    <form onSubmit={handleSubmit(onSubmit)} bg={bgColor[colorMode]}
+    color={color[colorMode]}>
         <FormControl isRequired my={2}>
           <FormLabel htmlFor="income">Összeg:</FormLabel>
           <Input
@@ -100,14 +98,14 @@ const IncomeForm = (props) => {
             Ruhapénzhez tartozik
       </Checkbox>
         }
-        <Box display="flex" justifyContent="center"> 
-        <Box display="flex" flexDirection="column" minWidth="80%">
-        {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={openDeleteModal}>Törlés</Button>}
-        <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
-        {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={deleteModalIsOpen} onRequestCloseDeleteModal={closeDeleteModal} closePreviousModal={props.onRequestClose} />}
-        <Button m={2} variantColor="green" leftIcon="check" type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
-      </Box>
-      </Box>
+        <Box display="flex" justifyContent="center">
+          <Box display="flex" flexDirection="column" minWidth="80%">
+            {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={onOpen}>Törlés</Button>}
+            <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestClose}>Mégse</Button>
+            {props.defaultValues && <ItemDeleteModal id={props.defaultValues.id} user={props.user} isOpen={isOpen} onRequestCloseDeleteModal={onClose} closePreviousModal={props.onRequestClose} />}
+            <Button m={2} variantColor="green" leftIcon="check" type="submit">{props.defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+          </Box>
+        </Box>
     </form>
   )
 }

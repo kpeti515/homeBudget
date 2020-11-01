@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react'
 import budgetReducer from '../Reducers/budgetReducer'
 import { useParams } from 'react-router-dom'
 import numeral from 'numeral'
-import { Button, Heading, Box, Text, Select } from "@chakra-ui/core"
+import { Button, Heading, Box, Text, Select, useColorMode } from "@chakra-ui/core"
 
 import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
@@ -17,7 +17,9 @@ numeral.locale('hu')
 function UserPage() {
   let { id } = useParams()
   const [userBudget, dispatch] = useReducer(budgetReducer, [])
-
+  const { colorMode } = useColorMode()
+  const bgColor = { light: "white.500", dark: "gray.900" };
+  const color = { light: "black", dark: "white" };
   useEffect(() => {
 
     const unsubscribeUserBudget = budgetDb
@@ -107,8 +109,8 @@ function UserPage() {
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
         <Select onChange={(e) => setSortType(e.target.value)}>
-          <option value="date">Dátum alapján</option>
-          <option value="amount">Összeg alapján</option>
+        <option value="date">Dátum alapján</option>
+          <option  value="amount">Összeg alapján</option>
         </Select>
 
       </Box>
