@@ -20,7 +20,6 @@ numeral.locale('hu')
 const BudgetItem = ({
   budget, showExpenses, showIncomes
 }) => {
-  console.log(budget, showExpenses);
   let { id } = useParams()
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {

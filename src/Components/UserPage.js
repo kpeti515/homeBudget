@@ -9,7 +9,6 @@ import IncomeModal from './Income_modal'
 import { budgetDb } from '../firebase/firebase'
 import FireBaseContext from '../firebase/FirebaseContext'
 import BudgetHistory from './Budget_History'
-import IncomeCheckingModal from './Income_Check'
 
 require('numeral/locales/hu')
 numeral.locale('hu')
@@ -85,13 +84,7 @@ function UserPage() {
   function closeIncomeModal() {
     setIncomeModalIsOpen(false)
   }
-  // const [incomeCheckIsOpen, setIncomeCheckIsOpen] = React.useState(false)
-  // function openIncomeCheckModal() {
-  //   setIncomeCheckIsOpen(true)
-  // }
-  // function closeIncomeCheckModal() {
-  //   setIncomeCheckIsOpen(false)
-  // }
+
   const [sortType, setSortType] = React.useState('date')
 
   return (
@@ -104,7 +97,6 @@ function UserPage() {
       <Box display="flex" flexWrap="wrap" justifyContent="center">
         <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
         <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
-        {/* <Button leftIcon="view" onClick={openIncomeCheckModal} m={2} height="3rem" width="70%" >Bevételek ellenőrzése</Button> */}
       </Box>
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
@@ -123,7 +115,6 @@ function UserPage() {
       
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
         <BudgetHistory showExpenses={showExpenses} showIncomes={showIncomes} sortBy={sortType} />
-        {/* <IncomeCheckingModal user={id} isOpen={incomeCheckIsOpen} onRequestClose={closeIncomeCheckModal} /> */}
       </FireBaseContext.Provider>
 
 
