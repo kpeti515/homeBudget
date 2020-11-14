@@ -15,6 +15,6 @@ var firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
 }
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// firebase..;
 
-export const budgetDb = firebase.firestore() //.collection('supplierContact')
+export const budgetDb = firebase.initializeApp(firebaseConfig).firestore() //.collection('supplierContact')
