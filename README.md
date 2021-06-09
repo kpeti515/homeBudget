@@ -29,7 +29,7 @@ Or incomes:
 ## Sorting options
 You can sort based on date or amount:
 
-![Sorting options](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/sort_options.PNG)
+![Sorting options](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/sort_options.png)
 ## Toasts
 After any modification you will receive a toast if it is done:
 
