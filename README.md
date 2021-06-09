@@ -3,7 +3,7 @@ This project is used by me and my wife to track our "own" money separately, whic
 
 # Features: 
 ## Responsive design
-![Tablet view](img\tablet_view.PNG)
+![Tablet view](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/tablet_view.PNG)
 ## Dark mode
 
 ## Filters
