@@ -1,18 +1,20 @@
 # Goal of this project:
-This project is used by me and my feyonce to track our "own" money separately, which can be spend to anything without the other's acceptance.
+This project is used by me and my wife to track our "own" money separately. 
+
+We have a common budget, but we agreed to have a small amount which can be spend to anything without the other's acceptance.
 
 # Features: 
 Current product state:
 ![Overview](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/overview.PNG)
 
 ## Responsive design
-Tablet view:
+Tablet and desktop view:
 
 ![Tablet view](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/tablet_view.PNG)
 
 Mobile view:
 
-![Tablet view](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/mobile_view.PNG)
+![Mobile view](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/mobile_view.PNG)
 ## Dark mode
 Two different style, one dark mode and one light mode:
 
@@ -50,7 +52,7 @@ If you press the delete button, a confirmation modal will appear - just to preve
 
 ![Confirmation modal](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/confirmation_window.PNG)
 ## Hidden feature
-My wife figured out, that I also need to separate money for clothes ( becasue I don't really spend money for clothes :) ) and she will buy some clothes for me from that money.<br/>
+My wife figured out, that I also need to separate money for clothes ( because I don't really spend money for clothes :) ) and she will buy some clothes for me from that money.<br/>
 This extra feature only appears at my profile. 
 
 ![Extra feature](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/hidden_feature.PNG)
@@ -60,8 +62,12 @@ This project use an external database to store the records, it is called [Fireba
 
 ![Firebase](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/firebase.PNG)
 # Planned updates
-
-
  - Login window
  - Decrease dependency quantities
  - Make code much cleaner
+ - Host it on my own server 
+ - Change database ->if I have a server with "unlimited" storage (4TB HDD, so not unlimited ;) ) why use external supplier?
+
+ Made with [React](https://reactjs.org/)
+
+ Currently hosted on [Heroku](https://www.heroku.com)
