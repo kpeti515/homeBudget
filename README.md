@@ -61,12 +61,13 @@ This extra feature only appears at my profile.
 This project use an external database to store the records, it is called [Firebase](https://firebase.google.com/)- which is a Google product and has a free version in it for small projects / data.
 
 ![Firebase](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/firebase.PNG)
-# Planned updates
- - Login window
- - Decrease dependency quantities
- - Make code much cleaner
- - Host it on my own server 
- - Change database ->if I have a server with "unlimited" storage (4TB HDD, so not unlimited ;) ) why use external supplier?
+# Planned updates and reasons for them
+ - Login window - make it secure and don't be afraid to share the link with others :)
+ - Decrease dependency quantities - I learned a lot due to a training (thanks EPAM!) and I want to implement that knowledge into this project too.
+ - Make code much cleaner - try to be more professional
+ - Maybe host it on my own server ?!
+ - Change database (after learned SQL or similar db) ->if I have a server with "unlimited" storage (4TB HDD, so not unlimited ;) ) why use external supplier?
+
 
  Made with [React](https://reactjs.org/)
 
