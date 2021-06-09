@@ -7,4 +7,4 @@ const budgetReducer = (state, action) => {
   }
 }
 
-export {budgetReducer as default}
+export { budgetReducer as default }

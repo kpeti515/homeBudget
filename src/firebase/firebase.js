@@ -1,4 +1,4 @@
-  
+
 import * as firebase from "firebase/app"
 import 'firebase/analytics'
 import 'firebase/database'
@@ -14,7 +14,5 @@ var firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_ID,
   appId: process.env.REACT_APP_APP_ID,
 }
-// Initialize Firebase
-// firebase..;
 
-export const budgetDb = firebase.initializeApp(firebaseConfig).firestore() //.collection('supplierContact')
+export const budgetDb = firebase.initializeApp(firebaseConfig).firestore()

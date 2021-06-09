@@ -1,12 +1,11 @@
 import React from 'react'
-// import './App.css'
-import { Box, useColorMode } from "@chakra-ui/core";
+import { Box, useColorMode } from "@chakra-ui/core"
 import Navbar from './Components/Navbar'
 
 function App() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = { light: "white.500", dark: "gray.900" };
-  const color = { light: "black", dark: "white" };
+  const { colorMode, toggleColorMode } = useColorMode()
+  const bgColor = { light: "white.500", dark: "gray.900" }
+  const color = { light: "black", dark: "white" }
 
   return (
     <Box height="100vh" className="App" bg={bgColor[colorMode]} color={color[colorMode]}>
@@ -17,4 +16,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
