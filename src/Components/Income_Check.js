@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 import Modal from 'react-modal'
-import IncomeList from './Income_List';
+import IncomeList from './Income_List'
 
 Modal.setAppElement('#root')
 const IncomeModal = (props) => {

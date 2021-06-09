@@ -1,10 +1,8 @@
 import React, { useContext } from 'react'
-
 import BudgetItem from './Budget_item'
 import FirebaseContext from '../firebase/FirebaseContext'
 
 const BudgetHistory = (props) => {
-
 
   const { userBudget } = useContext(FirebaseContext)
 
@@ -25,6 +23,5 @@ const BudgetHistory = (props) => {
         <BudgetItem key={budget.id} budget={budget} showExpenses={props.showExpenses} showIncomes={props.showIncomes}/>
       ))
   }
-
 }
 export { BudgetHistory as default }

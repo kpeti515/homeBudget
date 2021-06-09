@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   useColorMode,
   Modal,
@@ -9,7 +9,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/core"
 
-import IncomeForm from './IncomeForm';
+import IncomeForm from './IncomeForm'
 
 const IncomeModal = (props) => {
   const { colorMode } = useColorMode()

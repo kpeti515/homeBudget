@@ -3,7 +3,6 @@ import budgetReducer from '../Reducers/budgetReducer'
 import { useParams } from 'react-router-dom'
 import numeral from 'numeral'
 import { Button, Heading, Box, Text, Select, Switch, Flex, FormLabel } from "@chakra-ui/core"
-
 import ExpenseModal from './Expense_modal'
 import IncomeModal from './Income_modal'
 import { budgetDb } from '../firebase/firebase'
@@ -69,15 +68,16 @@ function UserPage() {
 
   const [showExpenses, changeShowExpenses] = React.useState(true)
   const [showIncomes, changeShowIncomes] = React.useState(true)
+  const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false)
+  const [incomeModalIsOpen, setIncomeModalIsOpen] = React.useState(false)
+  const [sortType, setSortType] = React.useState('date')
 
-  const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
   function openExpenseModal() {
     setExpenseModalIsOpen(true)
   }
   function closeExpenseModal() {
     setExpenseModalIsOpen(false)
   }
-  const [incomeModalIsOpen, setIncomeModalIsOpen] = React.useState(false);
   function openIncomeModal() {
     setIncomeModalIsOpen(true)
   }
@@ -85,42 +85,40 @@ function UserPage() {
     setIncomeModalIsOpen(false)
   }
 
-  const [sortType, setSortType] = React.useState('date')
-
   return (
     <React.Fragment>
-
       <Heading as="h3" size="lg" m={2}>
         {id} pénztárcája: {id === 'Lóri' ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $') : numeral(incomes - expenses).format('0,0[.]00 $')}
       </Heading>
+
       {incomeForCloth - expenseForCloth !== 0 ? <h4>{id} ruhapénze: {incomeForCloth - expenseForCloth} HUF</h4> : null}
+
       <Box display="flex" flexWrap="wrap" justifyContent="center">
         <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
         <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
       </Box>
+
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
         <Select onChange={(e) => setSortType(e.target.value)}>
           <option value="date">Dátum alapján</option>
           <option value="amount">Összeg alapján</option>
         </Select>
-        </Box>
-        <Flex m={4} justify="center" align="center">
-          <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
-          <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)}/>
-          
-          <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
-          <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)}/>
-        </Flex>
+      </Box>
+
+      <Flex m={4} justify="center" align="center">
+        <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
+        <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)}/>
+        <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
+        <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)}/>
+      </Flex>
       
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
         <BudgetHistory showExpenses={showExpenses} showIncomes={showIncomes} sortBy={sortType} />
       </FireBaseContext.Provider>
 
-
       <ExpenseModal user={id} isOpen={expenseModalIsOpen} onRequestClose={closeExpenseModal} />
       <IncomeModal user={id} isOpen={incomeModalIsOpen} onRequestClose={closeIncomeModal} />
-
     </React.Fragment>
   )
 }

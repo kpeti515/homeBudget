@@ -9,7 +9,6 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/core"
-
 import IncomeModal from './Income_modal'
 import ExpenseModal from './Expense_modal'
 import '../css/colorization.css'
@@ -21,18 +20,17 @@ const BudgetItem = ({
   budget, showExpenses, showIncomes
 }) => {
   let { id } = useParams()
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false)
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
 
   if (budget.income && showIncomes === true) {
     return (
       <React.Fragment>
-
         <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
           <StatLabel>{budget.reason}</StatLabel>
           <Box display={Flex} justifyContent="space-between">
@@ -59,14 +57,12 @@ const BudgetItem = ({
             <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
           </Box>
           <StatHelpText>{budget.date}</StatHelpText>
-  
         </Stat>
         <ExpenseModal user={id} defaultValues={budget} isOpen={modalIsOpen} onRequestClose={closeModal} />
       </React.Fragment>
     )
   }
   else return null
- 
 }
 
 export { BudgetItem as default }

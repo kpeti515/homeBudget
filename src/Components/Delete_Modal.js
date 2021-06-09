@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Box, Button, useToast,
   useColorMode,
@@ -9,13 +9,12 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/core"
-
 import { budgetDb } from '../firebase/firebase'
 
 const ItemDeleteModal = (props) => {
   const { colorMode } = useColorMode()
-  const bgColor = { light: "white", dark: "gray.700" };
-  const color = { light: "black", dark: "white" };
+  const bgColor = { light: "white", dark: "gray.700" }
+  const color = { light: "black", dark: "white" }
   const toast = useToast()
   const deleteItem = async () => {
     props.onRequestCloseDeleteModal()
@@ -27,8 +26,8 @@ const ItemDeleteModal = (props) => {
       duration: 5000,
       isClosable: true,
     })
-
   }
+
   return (
     <Modal
       bg={bgColor[colorMode]}
@@ -37,7 +36,6 @@ const ItemDeleteModal = (props) => {
       contentLabel="Elem törlése"
       onClose={props.onRequestCloseDeleteModal}
       closePreviousModal={props.closePreviousModal}
-
     >
       <ModalOverlay />
       <ModalContent>
@@ -63,7 +61,6 @@ const ItemDeleteModal = (props) => {
           </Box>
         </ModalBody>
       </ModalContent>
-
     </Modal>
   )
 }

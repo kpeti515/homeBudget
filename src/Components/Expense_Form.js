@@ -1,16 +1,15 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, 
+import { 
+  Box, 
   Button,
-   FormControl,
-    FormLabel, 
-    Input, 
-    Checkbox, 
-     useToast , 
-     useDisclosure
-    } from "@chakra-ui/core"
-
-
+  FormControl,
+  FormLabel, 
+  Input, 
+  Checkbox, 
+  useToast , 
+  useDisclosure
+} from "@chakra-ui/core"
 import { budgetDb } from '../firebase/firebase'
 import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
@@ -18,16 +17,13 @@ import ItemDeleteModal from './Delete_Modal'
 
 
 const ExpenseForm = (props) => {
-
-  const { handleSubmit, register } = useForm()
   let { id } = useParams()
-  const { isOpen, onOpen, onClose } = useDisclosure() // deleteModal
-
+  const { handleSubmit, register } = useForm()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const onSubmit = async (data) => {
 
     const itemName = props.defaultValues ? props.defaultValues.id : uuidv4()
-    
     let docRef = budgetDb.collection(`${props.user}`).doc(itemName)
 
     const inputs = {
@@ -128,7 +124,6 @@ const ExpenseForm = (props) => {
       </Box>
     </form>
   )
-
 }
 
-export default ExpenseForm;
+export default ExpenseForm

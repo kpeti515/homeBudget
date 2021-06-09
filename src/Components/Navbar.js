@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-} from "react-router-dom";
-import { Box, IconButton, Heading, Flex, Text } from "@chakra-ui/core";
-import UserPage from "./UserPage";
+} from "react-router-dom"
+import { Box, IconButton, Heading, Flex, Text } from "@chakra-ui/core"
+import UserPage from "./UserPage"
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -15,11 +15,8 @@ const MenuItems = ({ children }) => (
 )
 
 function Navbar(props) {
-  const [show, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!show);
-  // const { colorMode, toggleColorMode } = useColorMode();
-  // const bgColor = { light: "white.500", dark: "gray.900" };
-  // const color = { light: "black", dark: "white" };
+  const [show, setShow] = React.useState(false)
+  const handleToggle = () => setShow(!show)
   return (
     <>
       <Router >
@@ -69,11 +66,7 @@ function Navbar(props) {
                 <MenuItems><Link to="/Lóri" onClick={handleToggle}>Lóri</Link></MenuItems>
                 <MenuItems><Link to="/Teszt" onClick={handleToggle}>Teszt</Link></MenuItems>
               </Box>
-
-
             </Flex>
-
-
 
             <Switch>
               <Route path="/:id" children={<UserPage />} />
@@ -82,7 +75,7 @@ function Navbar(props) {
         </Box>
       </Router>
     </>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

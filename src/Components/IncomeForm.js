@@ -6,10 +6,10 @@ import { Box,
   Button, 
   FormControl, 
   FormLabel,
-   Input, 
-   Checkbox, 
-   useToast, 
-   useDisclosure 
+  Input, 
+  Checkbox, 
+  useToast, 
+  useDisclosure 
   } from "@chakra-ui/core"
 
 import { budgetDb } from '../firebase/firebase'
@@ -17,16 +17,12 @@ import { budgetDb } from '../firebase/firebase'
 import ItemDeleteModal from './Delete_Modal'
 
 const IncomeForm = (props) => {
-
-  const { handleSubmit, register } = useForm()
   let { id } = useParams()
-
-  const { isOpen, onOpen, onClose } = useDisclosure() // deleteModal
-
+  const { handleSubmit, register } = useForm()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const onSubmit = async (data) => {
     const itemName = props.defaultValues ? props.defaultValues.id : uuidv4()
-
     let docRef = budgetDb.collection(`${props.user}`).doc(itemName)
     const inputs = {
       'income': data.income,
@@ -92,6 +88,7 @@ const IncomeForm = (props) => {
             ref={register}
           />
         </FormControl>
+        
         {id === 'Lóri' &&
           <Checkbox
             defaultIsChecked={props.defaultValues && props.defaultValues.isIncomeForCloth}
@@ -100,8 +97,9 @@ const IncomeForm = (props) => {
             my={2}
           >
             Ruhapénzhez tartozik
-      </Checkbox>
+          </Checkbox>
         }
+
         <Box display="flex" justifyContent="center">
           <Box display="flex" flexDirection="column" minWidth="80%">
             {props.defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={onOpen}>Törlés</Button>}
