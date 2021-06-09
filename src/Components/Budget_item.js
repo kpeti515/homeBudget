@@ -45,7 +45,7 @@ const BudgetItem = ({
       </React.Fragment>
     )
   }
-  if (budget.expense && showExpenses === true ) {
+  if (budget.expense && showExpenses === true) {
     return (
       <React.Fragment>
         <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>

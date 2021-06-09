@@ -1,13 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { 
-  Box, 
+import {
+  Box,
   Button,
   FormControl,
-  FormLabel, 
-  Input, 
-  Checkbox, 
-  useToast , 
+  FormLabel,
+  Input,
+  Checkbox,
+  useToast,
   useDisclosure
 } from "@chakra-ui/core"
 import { budgetDb } from '../firebase/firebase'

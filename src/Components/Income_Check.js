@@ -4,7 +4,7 @@ import IncomeList from './Income_List'
 
 Modal.setAppElement('#root')
 const IncomeModal = (props) => {
-  
+
   return (
     <Modal
       isOpen={props.isOpen}

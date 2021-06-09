@@ -10,7 +10,7 @@ const BudgetHistory = (props) => {
     return userBudget
       .sort((a, b) => b.date.localeCompare(a.date))
       .map((budget) => (
-        <BudgetItem key={budget.id} budget={budget} showExpenses={props.showExpenses} showIncomes={props.showIncomes}/>
+        <BudgetItem key={budget.id} budget={budget} showExpenses={props.showExpenses} showIncomes={props.showIncomes} />
       ))
   } else if (props.sortBy === 'amount') {
     return userBudget
@@ -20,7 +20,7 @@ const BudgetHistory = (props) => {
         return amountB - amountA
       })
       .map((budget) => (
-        <BudgetItem key={budget.id} budget={budget} showExpenses={props.showExpenses} showIncomes={props.showIncomes}/>
+        <BudgetItem key={budget.id} budget={budget} showExpenses={props.showExpenses} showIncomes={props.showIncomes} />
       ))
   }
 }

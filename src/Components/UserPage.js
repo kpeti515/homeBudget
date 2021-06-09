@@ -108,11 +108,11 @@ function UserPage() {
 
       <Flex m={4} justify="center" align="center">
         <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
-        <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)}/>
+        <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)} />
         <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
-        <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)}/>
+        <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)} />
       </Flex>
-      
+
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
         <BudgetHistory showExpenses={showExpenses} showIncomes={showIncomes} sortBy={sortType} />
       </FireBaseContext.Provider>

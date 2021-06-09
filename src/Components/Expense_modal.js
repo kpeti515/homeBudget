@@ -26,20 +26,20 @@ const ExpenseModal = (props) => {
           color={color[colorMode]}
         >
           {props.defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}
-          </ModalHeader>
-          <ModalCloseButton
-            bg={bgColor[colorMode]}
-            color={color[colorMode]}
-          />
-          <ModalBody
-            bg={bgColor[colorMode]}
-            color={color[colorMode]}
-          >
-            <ExpenseForm {...props} />
-          </ModalBody>
+        </ModalHeader>
+        <ModalCloseButton
+          bg={bgColor[colorMode]}
+          color={color[colorMode]}
+        />
+        <ModalBody
+          bg={bgColor[colorMode]}
+          color={color[colorMode]}
+        >
+          <ExpenseForm {...props} />
+        </ModalBody>
       </ModalContent>
     </Modal>
   )
 }
 
-export { ExpenseModal as default}
+export { ExpenseModal as default }
