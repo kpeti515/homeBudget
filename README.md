@@ -52,7 +52,8 @@ If you press the delete button, a confirmation modal will appear - just to preve
 ## Hidden feature
 My wife figured out, that I also need to separate money for clothes ( becasue I don't really spend money for clothes :) ) and she will buy some clothes for me from that money.<br/>
 This extra feature only appears at my profile. 
-![Extra feature](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/hidden feature.PNG)
+
+![Extra feature](https://raw.githubusercontent.com/kpeti515/homeBudget/main/img/hidden_feature.PNG)
 
 ## Firebase as database
 This project use an external database to store the records, it is called [Firebase](https://firebase.google.com/)- which is a Google product and has a free version in it for small projects / data.
