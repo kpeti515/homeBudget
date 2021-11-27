@@ -7,6 +7,7 @@ import numeral from 'numeral';
 import {
   Button, Heading, Box, Text, Select, Switch, Flex, FormLabel,
 } from '@chakra-ui/core';
+import { collection, getDocs } from 'firebase/firestore';
 import budgetReducer from '../Reducers/budgetReducer';
 
 import { ExpenseModal } from './ExpenseModal';
@@ -23,21 +24,23 @@ export const UserPage = () => {
   const { id } = useParams();
   const [userBudget, dispatch] = useReducer(budgetReducer, []);
 
-  useEffect(() => {
-    const unsubscribeUserBudget = budgetDb
-      .collection(`${id}`)
-      .onSnapshot((snapshot) => {
-        const budgetList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        if (budgetList) {
-          dispatch({ type: 'LIST_BUDGET', budgetList });
-        }
-      });
+  const getBudget = async (db, identifier) => {
+    const budgetCollection = collection(db, identifier);
+    const budgetSnapshot = await getDocs(budgetCollection);
+    const budgetList = budgetSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    if (budgetList) {
+      dispatch({ type: 'LIST_BUDGET', budgetList });
+    }
+    return budgetList;
+  };
 
-    return () => unsubscribeUserBudget();
+  useEffect(() => {
+    getBudget(budgetDb, id);
   }, [id]);
+
   let expenses;
   let incomes;
   let expenseForCloth;

@@ -1,8 +1,5 @@
-import * as firebase from 'firebase/app';
-import 'firebase/analytics';
-import 'firebase/database';
-import 'firebase/storage';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -13,7 +10,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_ID,
   appId: process.env.REACT_APP_APP_ID,
 };
-// Initialize Firebase
-// firebase..;
 
-export const budgetDb = firebase.initializeApp(firebaseConfig).firestore();
+const app = initializeApp(firebaseConfig);
+export const budgetDb = getFirestore(app);
