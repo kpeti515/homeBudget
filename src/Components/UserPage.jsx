@@ -1,8 +1,7 @@
 /* eslint-disable block-scoped-var */
 /* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable react/jsx-no-bind */
-import React, { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import numeral from 'numeral';
 import {
@@ -10,17 +9,17 @@ import {
 } from '@chakra-ui/core';
 import budgetReducer from '../Reducers/budgetReducer';
 
-import ExpenseModal from './Expense_modal';
-import IncomeModal from './Income_modal';
+import { ExpenseModal } from './ExpenseModal';
+import { IncomeModal } from './IncomeModal';
+import { BudgetHistory } from './BudgetHistory';
 import { budgetDb } from '../firebase/firebase';
 import FireBaseContext from '../firebase/FirebaseContext';
-import BudgetHistory from './Budget_History';
 
 require('numeral/locales/hu');
 
 numeral.locale('hu');
 
-const UserPage = function () {
+export const UserPage = () => {
   const { id } = useParams();
   const [userBudget, dispatch] = useReducer(budgetReducer, []);
 
@@ -77,17 +76,17 @@ const UserPage = function () {
       .reduce((sum, value) => sum + value, 0);
   }
 
-  const [showExpenses, changeShowExpenses] = React.useState(true);
-  const [showIncomes, changeShowIncomes] = React.useState(true);
+  const [showExpenses, changeShowExpenses] = useState(true);
+  const [showIncomes, changeShowIncomes] = useState(true);
 
-  const [expenseModalIsOpen, setExpenseModalIsOpen] = React.useState(false);
+  const [expenseModalIsOpen, setExpenseModalIsOpen] = useState(false);
   function openExpenseModal() {
     setExpenseModalIsOpen(true);
   }
   function closeExpenseModal() {
     setExpenseModalIsOpen(false);
   }
-  const [incomeModalIsOpen, setIncomeModalIsOpen] = React.useState(false);
+  const [incomeModalIsOpen, setIncomeModalIsOpen] = useState(false);
   function openIncomeModal() {
     setIncomeModalIsOpen(true);
   }
@@ -95,7 +94,7 @@ const UserPage = function () {
     setIncomeModalIsOpen(false);
   }
 
-  const [sortType, setSortType] = React.useState('date');
+  const [sortType, setSortType] = useState('date');
 
   return (
     <>
@@ -130,10 +129,10 @@ const UserPage = function () {
       </Box>
       <Flex m={4} justify="center" align="center">
         <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
-        <Switch id="Incomes" size="lg" defaultIsChecked={true} onChange={() => changeShowIncomes(!showIncomes)} />
+        <Switch id="Incomes" size="lg" defaultIsChecked onChange={() => changeShowIncomes(!showIncomes)} />
 
         <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
-        <Switch id="Expenses" size="lg" defaultIsChecked={true} onChange={() => changeShowExpenses(!showExpenses)} />
+        <Switch id="Expenses" size="lg" defaultIsChecked onChange={() => changeShowExpenses(!showExpenses)} />
       </Flex>
 
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>
@@ -146,5 +145,3 @@ const UserPage = function () {
     </>
   );
 };
-
-export default UserPage;

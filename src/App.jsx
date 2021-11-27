@@ -1,25 +1,42 @@
 import React from 'react';
 // import './App.css'
 import { Box, useColorMode } from '@chakra-ui/core';
-import Navbar from './Components/Navbar';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Navbar } from './Components/Navbar';
+import { UserPage } from './Components/UserPage';
+import { Login } from './Components/Login';
 
-const App = function () {
+export const App = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = { light: 'white.500', dark: 'gray.900' };
+  const bgColor = { light: 'white', dark: 'black' };
   const color = { light: 'black', dark: 'white' };
 
   return (
-    <Box height="100vh" className="App" bg={bgColor[colorMode]} color={color[colorMode]}>
-      <header className="App-header">
-        <Navbar
-          color={color}
-          bgColor={bgColor}
-          toggleColorMode={toggleColorMode}
-          colorMode={colorMode}
-        />
-      </header>
-    </Box>
+    <Router>
+      <Box bg={bgColor[colorMode]} color={color[colorMode]} display="flex" justifyContent="center" minHeight="100vh">
+        <Box width={[
+          '100%', // base
+          '100%', // 480px upwards
+          '100%', // 768px upwards
+          '990px', // 992px upwards
+        ]}
+        >
+          <header className="App-header">
+            <Navbar
+              toggleColorMode={toggleColorMode}
+              colorMode={colorMode}
+            />
+          </header>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/:id">
+              <UserPage />
+            </Route>
+          </Switch>
+        </Box>
+      </Box>
+    </Router>
   );
 };
-
-export default App;

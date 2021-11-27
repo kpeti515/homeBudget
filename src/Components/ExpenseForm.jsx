@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import {
@@ -16,12 +15,12 @@ import {
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { budgetDb } from '../firebase/firebase';
-import ItemDeleteModal from './Delete_Modal';
+import { ItemDeleteModal } from './ItemDeleteModal';
 
-const ExpenseForm = function ({ defaultValues, user, onRequestClose }) {
+export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
   const { handleSubmit, register } = useForm();
   const { id } = useParams();
-  const { isOpen, onOpen, onClose } = useDisclosure(); // deleteModal
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
   const onSubmit = async (data) => {
@@ -139,8 +138,6 @@ const ExpenseForm = function ({ defaultValues, user, onRequestClose }) {
   );
 };
 
-export default ExpenseForm;
-
 ExpenseForm.propTypes = {
   defaultValues: PropTypes.shape({
     id: PropTypes.string,
@@ -150,6 +147,6 @@ ExpenseForm.propTypes = {
     description: PropTypes.string,
     item: PropTypes.string,
   }),
-  user: PropTypes.string,
-  onRequestClose: PropTypes.func,
+  user: PropTypes.string.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
 };

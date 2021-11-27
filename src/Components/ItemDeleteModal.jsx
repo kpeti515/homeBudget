@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Box, Button, useToast,
@@ -14,9 +12,9 @@ import {
 
 import { budgetDb } from '../firebase/firebase';
 
-const ItemDeleteModal = function ({
+export const ItemDeleteModal = ({
   onRequestCloseDeleteModal, closePreviousModal, user, id, isOpen,
-}) {
+}) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.700' };
   const color = { light: 'black', dark: 'white' };
@@ -71,13 +69,10 @@ const ItemDeleteModal = function ({
   );
 };
 
-// eslint-disable-next-line no-restricted-exports
-export { ItemDeleteModal as default };
-
 ItemDeleteModal.propTypes = {
-  id: PropTypes.string,
-  onRequestCloseDeleteModal: PropTypes.func,
-  closePreviousModal: PropTypes.func,
-  isOpen: PropTypes.bool,
-  user: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  onRequestCloseDeleteModal: PropTypes.func.isRequired,
+  closePreviousModal: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  user: PropTypes.string.isRequired,
 };

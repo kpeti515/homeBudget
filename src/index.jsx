@@ -5,7 +5,7 @@ import {
   theme, ThemeProvider, CSSReset, ColorModeProvider,
 } from '@chakra-ui/core';
 import './index.css';
-import App from './App';
+import { App } from './App';
 import * as serviceWorker from './serviceWorker';
 
 const breakpoints = ['360px', '768px', '1024px', '1440px'];

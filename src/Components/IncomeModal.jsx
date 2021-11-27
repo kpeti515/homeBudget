@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React from 'react';
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import {
   useColorMode,
@@ -10,16 +9,19 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/core';
-import ExpenseForm from './Expense_Form';
 
-const ExpenseModal = function ({
-  isOpen, onRequestClose, user, defaultValues,
-}) {
+import { IncomeForm } from './IncomeForm';
+
+export const IncomeModal = ({
+  isOpen, onRequestClose, defaultValues, user,
+}) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };
   return (
     <Modal
+      bg={bgColor[colorMode]}
+      color={color[colorMode]}
       isOpen={isOpen}
       onClose={onRequestClose}
     >
@@ -29,7 +31,7 @@ const ExpenseModal = function ({
           bg={bgColor[colorMode]}
           color={color[colorMode]}
         >
-          {defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}
+          {defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}
         </ModalHeader>
         <ModalCloseButton
           bg={bgColor[colorMode]}
@@ -39,11 +41,11 @@ const ExpenseModal = function ({
           bg={bgColor[colorMode]}
           color={color[colorMode]}
         >
-          <ExpenseForm
-            user={user}
+          <IncomeForm
+            isOpen={isOpen}
             onRequestClose={onRequestClose}
             defaultValues={defaultValues}
-            isOpen={isOpen}
+            user={user}
           />
         </ModalBody>
       </ModalContent>
@@ -51,10 +53,7 @@ const ExpenseModal = function ({
   );
 };
 
-// eslint-disable-next-line no-restricted-exports
-export { ExpenseModal as default };
-
-ExpenseForm.propTypes = {
+IncomeModal.propTypes = {
   defaultValues: PropTypes.shape({
     id: PropTypes.string,
     income: PropTypes.string,

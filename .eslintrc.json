@@ -14,6 +14,15 @@
   "plugins": ["react"],
   "rules": {
     "import/prefer-default-export": "off",
-    "func-names": ["error", "as-needed"]
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "func-names": ["error", "as-needed"],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
   }
 }

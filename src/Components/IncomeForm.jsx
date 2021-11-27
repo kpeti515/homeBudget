@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -16,10 +15,9 @@ import {
 } from '@chakra-ui/core';
 
 import { budgetDb } from '../firebase/firebase';
+import { ItemDeleteModal } from './ItemDeleteModal';
 
-import ItemDeleteModal from './Delete_Modal';
-
-const IncomeForm = function ({ defaultValues, user, onRequestClose }) {
+export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
   const { handleSubmit, register } = useForm();
   const { id } = useParams();
 
@@ -126,9 +124,6 @@ const IncomeForm = function ({ defaultValues, user, onRequestClose }) {
     </form>
   );
 };
-
-// eslint-disable-next-line no-restricted-exports
-export { IncomeForm as default };
 
 IncomeForm.propTypes = {
   defaultValues: PropTypes.shape({

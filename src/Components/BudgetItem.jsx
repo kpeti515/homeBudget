@@ -1,6 +1,5 @@
-/* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
@@ -13,26 +12,22 @@ import {
   Box,
 } from '@chakra-ui/core';
 
-import IncomeModal from './Income_modal';
-import ExpenseModal from './Expense_modal';
 import '../css/colorization.css';
 import '../css/BudgetItem.css';
+import { ExpenseModal } from './ExpenseModal';
+import { IncomeModal } from './IncomeModal';
 
 require('numeral/locales/hu');
 
 numeral.locale('hu');
 
-const BudgetItem = function ({
+export const BudgetItem = ({
   budget, showExpenses, showIncomes,
-}) {
+}) => {
   const { id } = useParams();
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   if (budget.income && showIncomes === true) {
     return (
@@ -85,9 +80,6 @@ const BudgetItem = function ({
   return null;
 };
 
-// eslint-disable-next-line no-restricted-exports
-export { BudgetItem as default };
-
 BudgetItem.propTypes = {
   budget: PropTypes.shape({
     reason: PropTypes.string,
@@ -95,7 +87,7 @@ BudgetItem.propTypes = {
     expense: PropTypes.string,
     date: PropTypes.string,
     item: PropTypes.string,
-  }),
-  showExpenses: PropTypes.bool,
-  showIncomes: PropTypes.bool,
+  }).isRequired,
+  showExpenses: PropTypes.bool.isRequired,
+  showIncomes: PropTypes.bool.isRequired,
 };
