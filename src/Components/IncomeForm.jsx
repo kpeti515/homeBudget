@@ -14,7 +14,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/core';
 
+import { setDoc, doc } from 'firebase/firestore';
 import { budgetDb } from '../firebase/firebase';
+
 import { ItemDeleteModal } from './ItemDeleteModal';
 
 export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
@@ -27,22 +29,14 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
   const onSubmit = async (data) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
-    const docRef = budgetDb.collection(`${user}`).doc(itemName);
     const inputs = {
       income: data.income,
       reason: data.reason,
       date: data.date,
       isIncomeForCloth: !!data.isIncomeForCloth,
     };
-    if (defaultValues) {
-      await docRef.update({
-        ...inputs,
-      });
-    } else {
-      await docRef.set({
-        ...inputs,
-      });
-    }
+
+    await setDoc(doc(budgetDb, user, itemName), inputs);
     onRequestClose();
     toast({
       title: 'Mentve.',

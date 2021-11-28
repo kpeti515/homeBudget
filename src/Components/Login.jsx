@@ -1,25 +1,26 @@
-import { useState } from 'react';
+import { Button } from '@chakra-ui/core';
+import {
+  GoogleAuthProvider, getAuth, signInWithRedirect, signInWithPopup, FacebookAuthProvider,
+} from 'firebase/auth';
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const provider = new GoogleAuthProvider();
+  const fbProvider = new FacebookAuthProvider();
+  const auth = getAuth();
+  const handleGoogleAuth = () => {
+    signInWithRedirect(auth, provider);
+  };
+  const handleFacebookAuth = () => {
+    signInWithRedirect(auth, fbProvider);
+  };
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
   return (
     <>
-      <p>Email</p>
-      <input type="text" name="email" onChange={handleEmailChange} value={email} />
-      <p>Jelszó</p>
-      <input type="password" name="password" onChange={handlePasswordChange} value={password} />
       <div>
-        <button type="submit">Bejelentkezés</button>
+        <Button type="button" variantColor="cyan" onClick={handleGoogleAuth}>Bejelentkezés Google fikókkal</Button>
       </div>
       <div>
-        <button type="button">Bejelentkezés Google fikókkal</button>
-      </div>
-      <div>
-        <button type="button">Bejelentkezés Facebook fikókkal</button>
+        <Button type="button" variantColor="blue" onClick={handleFacebookAuth}>Bejelentkezés Facebook fikókkal</Button>
       </div>
     </>
   );

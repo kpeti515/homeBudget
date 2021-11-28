@@ -10,6 +10,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/core';
 
+import { doc, deleteDoc } from 'firebase/firestore';
 import { budgetDb } from '../firebase/firebase';
 
 export const ItemDeleteModal = ({
@@ -19,10 +20,13 @@ export const ItemDeleteModal = ({
   const bgColor = { light: 'white', dark: 'gray.700' };
   const color = { light: 'black', dark: 'white' };
   const toast = useToast();
+
   const deleteItem = async () => {
     onRequestCloseDeleteModal();
     closePreviousModal();
-    await budgetDb.collection(`${user}`).doc(`${id}`).delete();
+
+    await deleteDoc(doc(budgetDb, user, id));
+
     toast({
       title: 'Törölve.',
       status: 'error',
@@ -30,6 +34,7 @@ export const ItemDeleteModal = ({
       isClosable: true,
     });
   };
+
   return (
     <Modal
       bg={bgColor[colorMode]}

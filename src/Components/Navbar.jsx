@@ -1,6 +1,11 @@
+/* eslint-disable react/forbid-prop-types */
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  getAuth, signOut,
+} from 'firebase/auth';
+
 import {
   Box, IconButton, Heading, Flex, Text,
 } from '@chakra-ui/core';
@@ -11,9 +16,23 @@ const MenuItems = ({ children }) => (
   </Text>
 );
 
-export const Navbar = ({ colorMode, toggleColorMode }) => {
+export const Navbar = ({
+  user, setUser, colorMode, toggleColorMode,
+}) => {
+  console.log(user);
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
+  const auth = getAuth();
+
+  const handleLogout = async () => {
+    await signOut(auth).then(() => {
+      console.log('success');
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+    setUser(false);
+  };
   return (
     <Flex
       as="nav"
@@ -31,7 +50,9 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
         </Heading>
       </Flex>
 
+      {user && <p>{user.displayName}</p>}
       <Box display={{ base: 'block', md: 'none' }} onClick={handleToggle}>
+
         <svg
           fill="white"
           width="12px"
@@ -43,16 +64,22 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
         </svg>
       </Box>
 
+      {user
+      && (
       <Box
         display={{ sm: show ? 'block' : 'none', md: 'flex' }}
         width={{ sm: 'full', md: 'auto' }}
         flexGrow={1}
         justifyContent="flex-end"
       >
+        <MenuItems>Fiókok:</MenuItems>
         <MenuItems><Link to="/Andi" onClick={handleToggle}>Andi</Link></MenuItems>
         <MenuItems><Link to="/Lóri" onClick={handleToggle}>Lóri</Link></MenuItems>
         <MenuItems><Link to="/Teszt" onClick={handleToggle}>Teszt</Link></MenuItems>
+        <MenuItems><button type="button" onClick={handleLogout}>Kijelentkezés</button></MenuItems>
+
       </Box>
+      )}
 
     </Flex>
   );
@@ -65,4 +92,9 @@ MenuItems.propTypes = {
 Navbar.propTypes = {
   colorMode: PropTypes.string.isRequired,
   toggleColorMode: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
+  user: PropTypes.object,
+};
+Navbar.defaultProps = {
+  user: null,
 };

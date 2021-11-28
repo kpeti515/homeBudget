@@ -14,7 +14,9 @@ import {
 
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { setDoc, doc } from 'firebase/firestore';
 import { budgetDb } from '../firebase/firebase';
+
 import { ItemDeleteModal } from './ItemDeleteModal';
 
 export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
@@ -26,8 +28,6 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
   const onSubmit = async (data) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
-    const docRef = budgetDb.collection(`${user}`).doc(itemName);
-
     const inputs = {
       expense: data.expense,
       item: data.item,
@@ -35,15 +35,9 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
       date: data.date,
       isIncomeForCloth: !!data.isIncomeForCloth,
     };
-    if (defaultValues) {
-      await docRef.update({
-        ...inputs,
-      });
-    } else {
-      await docRef.set({
-        ...inputs,
-      });
-    }
+
+    await setDoc(doc(budgetDb, user, itemName), inputs);
+
     onRequestClose();
     toast({
       title: 'Mentve.',
