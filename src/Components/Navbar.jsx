@@ -19,14 +19,12 @@ const MenuItems = ({ children }) => (
 export const Navbar = ({
   user, setUser, colorMode, toggleColorMode,
 }) => {
-  console.log(user);
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
   const auth = getAuth();
 
   const handleLogout = async () => {
     await signOut(auth).then(() => {
-      console.log('success');
       // Sign-out successful.
     }).catch((error) => {
       // An error happened.
@@ -80,7 +78,7 @@ export const Navbar = ({
 
       </Box>
       )}
-
+      {user && <img src={user.photoURL} width="40px" style={{ borderRadius: '50%' }} alt="avatar" />}
     </Flex>
   );
 };
