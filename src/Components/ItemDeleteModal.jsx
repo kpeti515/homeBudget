@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import {
   Box, Button, useToast,
   useColorMode,
@@ -8,34 +8,42 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from "@chakra-ui/core"
-import { budgetDb } from '../firebase/firebase'
+} from '@chakra-ui/core';
 
-const ItemDeleteModal = (props) => {
-  const { colorMode } = useColorMode()
-  const bgColor = { light: "white", dark: "gray.700" }
-  const color = { light: "black", dark: "white" }
-  const toast = useToast()
+import { doc, deleteDoc } from 'firebase/firestore';
+import { budgetDb } from '../firebase/firebase';
+
+export const ItemDeleteModal = ({
+  onRequestCloseDeleteModal, closePreviousModal, user, id, isOpen,
+}) => {
+  const { colorMode } = useColorMode();
+  const bgColor = { light: 'white', dark: 'gray.700' };
+  const color = { light: 'black', dark: 'white' };
+  const toast = useToast();
+
   const deleteItem = async () => {
-    props.onRequestCloseDeleteModal()
-    props.closePreviousModal()
-    await budgetDb.collection(`${props.user}`).doc(`${props.id}`).delete()
+    onRequestCloseDeleteModal();
+    closePreviousModal();
+
+    await deleteDoc(doc(budgetDb, user, id));
+
     toast({
-      title: "Törölve.",
-      status: "error",
+      title: 'Törölve.',
+      status: 'error',
       duration: 5000,
       isClosable: true,
-    })
-  }
+    });
+  };
 
   return (
     <Modal
       bg={bgColor[colorMode]}
       color={color[colorMode]}
-      isOpen={props.isOpen}
+      isOpen={isOpen}
       contentLabel="Elem törlése"
-      onClose={props.onRequestCloseDeleteModal}
-      closePreviousModal={props.closePreviousModal}
+      onClose={onRequestCloseDeleteModal}
+      closePreviousModal={closePreviousModal}
+
     >
       <ModalOverlay />
       <ModalContent>
@@ -56,13 +64,19 @@ const ItemDeleteModal = (props) => {
           <Box display="flex" justifyContent="center">
             <Box display="flex" flexDirection="column" minWidth="80%">
               <Button m={2} variantColor="red" leftIcon="delete" onClick={deleteItem}>Törlés</Button>
-              <Button m={2} variantColor="yellow" leftIcon="close" onClick={props.onRequestCloseDeleteModal}>Mégse</Button>
+              <Button m={2} variantColor="yellow" leftIcon="close" onClick={onRequestCloseDeleteModal}>Mégse</Button>
             </Box>
           </Box>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export { ItemDeleteModal as default }
+ItemDeleteModal.propTypes = {
+  id: PropTypes.string.isRequired,
+  onRequestCloseDeleteModal: PropTypes.func.isRequired,
+  closePreviousModal: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  user: PropTypes.string.isRequired,
+};
