@@ -69,7 +69,6 @@ export const ItemDeleteModal = ({
           </Box>
         </ModalBody>
       </ModalContent>
-
     </Modal>
   );
 };
