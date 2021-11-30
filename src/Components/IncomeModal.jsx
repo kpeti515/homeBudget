@@ -13,7 +13,10 @@ import {
 import { IncomeForm } from './IncomeForm';
 
 export const IncomeModal = ({
-  isOpen, onRequestClose, defaultValues, user,
+  isOpen,
+  onRequestClose,
+  defaultValues,
+  user,
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
@@ -27,20 +30,11 @@ export const IncomeModal = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
           {defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}
         </ModalHeader>
-        <ModalCloseButton
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        />
-        <ModalBody
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalCloseButton bg={bgColor[colorMode]} color={color[colorMode]} />
+        <ModalBody bg={bgColor[colorMode]} color={color[colorMode]}>
           <IncomeForm
             isOpen={isOpen}
             onRequestClose={onRequestClose}

@@ -101,8 +101,7 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
         />
       </FormControl>
 
-      { id === 'Lóri'
-        && (
+      {id === 'Lóri' && (
         <Checkbox
           defaultIsChecked={defaultValues && defaultValues.isIncomeForCloth}
           name="isIncomeForCloth"
@@ -111,22 +110,44 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
         >
           Ruhapénzhez tartozik
         </Checkbox>
-        )}
+      )}
       <Box display="flex" justifyContent="center">
         <Box display="flex" flexDirection="column" minWidth="80%">
-          {defaultValues && <Button m={2} colorScheme="red" leftIcon={<DeleteIcon />} onClick={onOpen}>Törlés</Button>}
-          <Button m={2} colorScheme="yellow" leftIcon={<CloseIcon />} onClick={onRequestClose}>Mégse</Button>
-          {defaultValues
-          && (
-          <ItemDeleteModal
-            id={defaultValues.id}
-            user={user}
-            isOpen={isOpen}
-            onRequestCloseDeleteModal={onClose}
-            closePreviousModal={onRequestClose}
-          />
+          {defaultValues && (
+            <Button
+              m={2}
+              colorScheme="red"
+              leftIcon={<DeleteIcon />}
+              onClick={onOpen}
+            >
+              Törlés
+            </Button>
           )}
-          <Button m={2} colorScheme="green" leftIcon={<CheckIcon />} type="submit">{defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+          <Button
+            m={2}
+            colorScheme="yellow"
+            leftIcon={<CloseIcon />}
+            onClick={onRequestClose}
+          >
+            Mégse
+          </Button>
+          {defaultValues && (
+            <ItemDeleteModal
+              id={defaultValues.id}
+              user={user}
+              isOpen={isOpen}
+              onRequestCloseDeleteModal={onClose}
+              closePreviousModal={onRequestClose}
+            />
+          )}
+          <Button
+            m={2}
+            colorScheme="green"
+            leftIcon={<CheckIcon />}
+            type="submit"
+          >
+            {defaultValues ? 'Módosítás mentése' : 'Mentés'}
+          </Button>
         </Box>
       </Box>
     </form>

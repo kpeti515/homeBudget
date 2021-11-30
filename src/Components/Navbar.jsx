@@ -2,13 +2,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  getAuth, signOut,
-} from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
-import {
-  Box, IconButton, Heading, Flex, Text,
-} from '@chakra-ui/react';
+import { Box, IconButton, Heading, Flex, Text } from '@chakra-ui/react';
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 
 const MenuItems = ({ children }) => (
@@ -17,19 +13,19 @@ const MenuItems = ({ children }) => (
   </Text>
 );
 
-export const Navbar = ({
-  user, setUser, colorMode, toggleColorMode,
-}) => {
+export const Navbar = ({ user, setUser, colorMode, toggleColorMode }) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
   const auth = getAuth();
 
   const handleLogout = async () => {
-    await signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
+    await signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
     setUser(false);
   };
   return (
@@ -45,13 +41,17 @@ export const Navbar = ({
       <Flex align="center" mr={5}>
         <Heading as="h1" fontSize="24">
           <Link to="/">Zsebpénz app</Link>
-          <IconButton bg="teal.500" mx={4} onClick={toggleColorMode} icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />} />
+          <IconButton
+            bg="teal.500"
+            mx={4}
+            onClick={toggleColorMode}
+            icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+          />
         </Heading>
       </Flex>
 
       {user && <p>{user.displayName}</p>}
       <Box display={{ base: 'block', md: 'none' }} onClick={handleToggle}>
-
         <svg
           fill="white"
           width="12px"
@@ -63,23 +63,44 @@ export const Navbar = ({
         </svg>
       </Box>
 
-      {user
-      && (
-      <Box
-        display={{ sm: show ? 'block' : 'none', md: 'flex' }}
-        width={{ sm: 'full', md: 'auto' }}
-        flexGrow={1}
-        justifyContent="flex-end"
-      >
-        <MenuItems>Fiókok:</MenuItems>
-        <MenuItems><Link to="/Andi" onClick={handleToggle}>Andi</Link></MenuItems>
-        <MenuItems><Link to="/Lóri" onClick={handleToggle}>Lóri</Link></MenuItems>
-        <MenuItems><Link to="/Teszt" onClick={handleToggle}>Teszt</Link></MenuItems>
-        <MenuItems><button type="button" onClick={handleLogout}>Kijelentkezés</button></MenuItems>
-
-      </Box>
+      {user && (
+        <Box
+          display={{ sm: show ? 'block' : 'none', md: 'flex' }}
+          width={{ sm: 'full', md: 'auto' }}
+          flexGrow={1}
+          justifyContent="flex-end"
+        >
+          <MenuItems>Fiókok:</MenuItems>
+          <MenuItems>
+            <Link to="/Andi" onClick={handleToggle}>
+              Andi
+            </Link>
+          </MenuItems>
+          <MenuItems>
+            <Link to="/Lóri" onClick={handleToggle}>
+              Lóri
+            </Link>
+          </MenuItems>
+          <MenuItems>
+            <Link to="/Teszt" onClick={handleToggle}>
+              Teszt
+            </Link>
+          </MenuItems>
+          <MenuItems>
+            <button type="button" onClick={handleLogout}>
+              Kijelentkezés
+            </button>
+          </MenuItems>
+        </Box>
       )}
-      {user && <img src={user.photoURL} width="40px" style={{ borderRadius: '50%' }} alt="avatar" />}
+      {user && (
+        <img
+          src={user.photoURL}
+          width="40px"
+          style={{ borderRadius: '50%' }}
+          alt="avatar"
+        />
+      )}
     </Flex>
   );
 };

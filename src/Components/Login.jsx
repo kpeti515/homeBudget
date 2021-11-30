@@ -1,6 +1,9 @@
 import { Button } from '@chakra-ui/react';
 import {
-  GoogleAuthProvider, getAuth, signInWithRedirect, FacebookAuthProvider,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithRedirect,
+  FacebookAuthProvider,
 } from 'firebase/auth';
 
 export const Login = () => {
@@ -17,10 +20,14 @@ export const Login = () => {
   return (
     <>
       <div>
-        <Button type="button" colorScheme="cyan" onClick={handleGoogleAuth}>Bejelentkezés Google fikókkal</Button>
+        <Button type="button" colorScheme="cyan" onClick={handleGoogleAuth}>
+          Bejelentkezés Google fikókkal
+        </Button>
       </div>
       <div>
-        <Button type="button" colorScheme="blue" onClick={handleFacebookAuth}>Bejelentkezés Facebook fikókkal</Button>
+        <Button type="button" colorScheme="blue" onClick={handleFacebookAuth}>
+          Bejelentkezés Facebook fikókkal
+        </Button>
       </div>
     </>
   );

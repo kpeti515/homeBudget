@@ -22,9 +22,7 @@ require('numeral/locales/hu');
 
 numeral.locale('hu');
 
-export const BudgetItem = ({
-  budget, showExpenses, showIncomes,
-}) => {
+export const BudgetItem = ({ budget, showExpenses, showIncomes }) => {
   const { id } = useParams();
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -33,15 +31,26 @@ export const BudgetItem = ({
   if (budget.income && showIncomes === true) {
     return (
       <>
-
-        <Stat border="2px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
+        <Stat
+          border="2px"
+          borderColor="gray.200"
+          borderRadius="md"
+          m={3}
+          mx={6}
+        >
           <StatLabel ml={2}>{budget.reason}</StatLabel>
           <Box className="display__flex" justifyContent="space-between">
             <StatNumber ml={4} fontSize={20}>
-              +
-              {numeral(budget.income).format('0,0[.]00 $')}
+              +{numeral(budget.income).format('0,0[.]00 $')}
             </StatNumber>
-            <Button leftIcon={<EditIcon />} colorScheme="yellow" onClick={openModal} mr={4}>Módosítás</Button>
+            <Button
+              leftIcon={<EditIcon />}
+              colorScheme="yellow"
+              onClick={openModal}
+              mr={4}
+            >
+              Módosítás
+            </Button>
           </Box>
           <StatHelpText ml={2}>{budget.date}</StatHelpText>
         </Stat>
@@ -57,17 +66,28 @@ export const BudgetItem = ({
   if (budget.expense && showExpenses === true) {
     return (
       <>
-        <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
+        <Stat
+          border="1px"
+          borderColor="gray.200"
+          borderRadius="md"
+          m={3}
+          mx={6}
+        >
           <StatLabel ml={2}>{budget.item}</StatLabel>
           <Box className="display__flex" justifyContent="space-between">
             <StatNumber fontSize={20} ml={4}>
-              -
-              {numeral(budget.expense).format('0,0[.]00 $')}
+              -{numeral(budget.expense).format('0,0[.]00 $')}
             </StatNumber>
-            <Button leftIcon={<EditIcon />} colorScheme="yellow" onClick={openModal} mr={4}>Módosítás</Button>
+            <Button
+              leftIcon={<EditIcon />}
+              colorScheme="yellow"
+              onClick={openModal}
+              mr={4}
+            >
+              Módosítás
+            </Button>
           </Box>
           <StatHelpText ml={2}>{budget.date}</StatHelpText>
-
         </Stat>
         <ExpenseModal
           user={id}

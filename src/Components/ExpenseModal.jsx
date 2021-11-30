@@ -12,32 +12,23 @@ import {
 import { ExpenseForm } from './ExpenseForm';
 
 export const ExpenseModal = ({
-  isOpen, onRequestClose, user, defaultValues,
+  isOpen,
+  onRequestClose,
+  user,
+  defaultValues,
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onRequestClose}
-    >
+    <Modal isOpen={isOpen} onClose={onRequestClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
           {defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}
         </ModalHeader>
-        <ModalCloseButton
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        />
-        <ModalBody
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalCloseButton bg={bgColor[colorMode]} color={color[colorMode]} />
+        <ModalBody bg={bgColor[colorMode]} color={color[colorMode]}>
           <ExpenseForm
             user={user}
             onRequestClose={onRequestClose}

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import {
-  Box, Button, useToast,
+  Box,
+  Button,
+  useToast,
   useColorMode,
   Modal,
   ModalOverlay,
@@ -15,7 +17,11 @@ import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { budgetDb } from '../firebase/firebase';
 
 export const ItemDeleteModal = ({
-  onRequestCloseDeleteModal, closePreviousModal, user, id, isOpen,
+  onRequestCloseDeleteModal,
+  closePreviousModal,
+  user,
+  id,
+  isOpen,
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.700' };
@@ -44,28 +50,32 @@ export const ItemDeleteModal = ({
       contentLabel="Elem törlése"
       onClose={onRequestCloseDeleteModal}
       closePreviousModal={closePreviousModal}
-
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
           Valóban törölni szeretnéd ezt a tételt?
         </ModalHeader>
-        <ModalCloseButton
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        />
-        <ModalBody
-          bg={bgColor[colorMode]}
-          color={color[colorMode]}
-        >
+        <ModalCloseButton bg={bgColor[colorMode]} color={color[colorMode]} />
+        <ModalBody bg={bgColor[colorMode]} color={color[colorMode]}>
           <Box display="flex" justifyContent="center">
             <Box display="flex" flexDirection="column" minWidth="80%">
-              <Button m={2} colorScheme="red" leftIcon={<DeleteIcon />} onClick={deleteItem}>Törlés</Button>
-              <Button m={2} colorScheme="yellow" leftIcon={<CloseIcon />} onClick={onRequestCloseDeleteModal}>Mégse</Button>
+              <Button
+                m={2}
+                colorScheme="red"
+                leftIcon={<DeleteIcon />}
+                onClick={deleteItem}
+              >
+                Törlés
+              </Button>
+              <Button
+                m={2}
+                colorScheme="yellow"
+                leftIcon={<CloseIcon />}
+                onClick={onRequestCloseDeleteModal}
+              >
+                Mégse
+              </Button>
             </Box>
           </Box>
         </ModalBody>
