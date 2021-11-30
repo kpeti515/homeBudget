@@ -8,9 +8,10 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { doc, deleteDoc } from 'firebase/firestore';
+import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { budgetDb } from '../firebase/firebase';
 
 export const ItemDeleteModal = ({
@@ -63,8 +64,8 @@ export const ItemDeleteModal = ({
         >
           <Box display="flex" justifyContent="center">
             <Box display="flex" flexDirection="column" minWidth="80%">
-              <Button m={2} variantColor="red" leftIcon="delete" onClick={deleteItem}>Törlés</Button>
-              <Button m={2} variantColor="yellow" leftIcon="close" onClick={onRequestCloseDeleteModal}>Mégse</Button>
+              <Button m={2} colorScheme="red" leftIcon={<DeleteIcon />} onClick={deleteItem}>Törlés</Button>
+              <Button m={2} colorScheme="yellow" leftIcon={<CloseIcon />} onClick={onRequestCloseDeleteModal}>Mégse</Button>
             </Box>
           </Box>
         </ModalBody>

@@ -10,10 +10,11 @@ import {
   StatNumber,
   StatHelpText,
   Box,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import '../css/colorization.css';
 import '../css/BudgetItem.css';
+import { EditIcon } from '@chakra-ui/icons';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 
@@ -33,16 +34,16 @@ export const BudgetItem = ({
     return (
       <>
 
-        <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
-          <StatLabel>{budget.reason}</StatLabel>
+        <Stat border="2px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
+          <StatLabel ml={2}>{budget.reason}</StatLabel>
           <Box className="display__flex" justifyContent="space-between">
-            <StatNumber fontSize={20}>
+            <StatNumber ml={4} fontSize={20}>
               +
               {numeral(budget.income).format('0,0[.]00 $')}
             </StatNumber>
-            <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
+            <Button leftIcon={<EditIcon />} colorScheme="yellow" onClick={openModal} mr={4}>Módosítás</Button>
           </Box>
-          <StatHelpText>{budget.date}</StatHelpText>
+          <StatHelpText ml={2}>{budget.date}</StatHelpText>
         </Stat>
         <IncomeModal
           user={id}
@@ -57,15 +58,15 @@ export const BudgetItem = ({
     return (
       <>
         <Stat border="1px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
-          <StatLabel>{budget.item}</StatLabel>
+          <StatLabel ml={2}>{budget.item}</StatLabel>
           <Box className="display__flex" justifyContent="space-between">
-            <StatNumber fontSize={20}>
+            <StatNumber fontSize={20} ml={4}>
               -
               {numeral(budget.expense).format('0,0[.]00 $')}
             </StatNumber>
-            <Button leftIcon="edit" variantColor="yellow" onClick={openModal} m={1}>Módosítás</Button>
+            <Button leftIcon={<EditIcon />} colorScheme="yellow" onClick={openModal} mr={4}>Módosítás</Button>
           </Box>
-          <StatHelpText>{budget.date}</StatHelpText>
+          <StatHelpText ml={2}>{budget.date}</StatHelpText>
 
         </Stat>
         <ExpenseModal
