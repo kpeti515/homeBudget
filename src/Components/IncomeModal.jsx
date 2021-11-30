@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { IncomeForm } from './IncomeForm';
 

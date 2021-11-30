@@ -8,7 +8,8 @@ import {
 
 import {
   Box, IconButton, Heading, Flex, Text,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
+import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -42,9 +43,9 @@ export const Navbar = ({
       color="white"
     >
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing="-.1rem">
+        <Heading as="h1" fontSize="24">
           <Link to="/">Zsebpénz app</Link>
-          <IconButton bg="teal.500" mx={4} onClick={toggleColorMode} icon={colorMode === 'light' ? 'sun' : 'moon'} />
+          <IconButton bg="teal.500" mx={4} onClick={toggleColorMode} icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />} />
         </Heading>
       </Flex>
 

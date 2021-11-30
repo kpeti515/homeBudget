@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import './App.css'
-import { Box, useColorMode } from '@chakra-ui/core';
+import { Box, useColorMode } from '@chakra-ui/react';
 import {
   BrowserRouter as Router, Route, Switch, Redirect,
 } from 'react-router-dom';

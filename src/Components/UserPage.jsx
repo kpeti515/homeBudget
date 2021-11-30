@@ -6,8 +6,9 @@ import { useParams } from 'react-router-dom';
 import numeral from 'numeral';
 import {
   Button, Heading, Box, Text, Select, Switch, Flex, FormLabel,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { collection, getDocs } from 'firebase/firestore';
+import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import budgetReducer from '../Reducers/budgetReducer';
 
 import { ExpenseModal } from './ExpenseModal';
@@ -120,8 +121,8 @@ export const UserPage = () => {
         </h4>
       ) : null}
       <Box display="flex" flexWrap="wrap" justifyContent="center">
-        <Button leftIcon="add" variantColor="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
-        <Button leftIcon="minus" variantColor="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
+        <Button leftIcon={<AddIcon />} colorScheme="green" onClick={openIncomeModal} m={2} height="3rem" width="34%">Bevétel</Button>
+        <Button leftIcon={<MinusIcon />} colorScheme="red" onClick={openExpenseModal} m={2} height="3rem" width="34%">Kiadás</Button>
       </Box>
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
@@ -132,10 +133,10 @@ export const UserPage = () => {
       </Box>
       <Flex m={4} justify="center" align="center">
         <FormLabel htmlFor="Incomes">Bevételek</FormLabel>
-        <Switch id="Incomes" size="lg" defaultIsChecked onChange={() => changeShowIncomes(!showIncomes)} />
+        <Switch id="Incomes" size="lg" colorScheme="blue" defaultIsChecked onChange={() => changeShowIncomes(!showIncomes)} />
 
         <FormLabel ml={10} htmlFor="Expenses">Kiadások</FormLabel>
-        <Switch id="Expenses" size="lg" defaultIsChecked onChange={() => changeShowExpenses(!showExpenses)} />
+        <Switch id="Expenses" size="lg" colorScheme="blue" defaultIsChecked onChange={() => changeShowExpenses(!showExpenses)} />
       </Flex>
 
       <FireBaseContext.Provider value={{ userBudget, dispatch }}>

@@ -10,11 +10,12 @@ import {
   Checkbox,
   useToast,
   useDisclosure,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { setDoc, doc } from 'firebase/firestore';
+import { CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { budgetDb } from '../firebase/firebase';
 
 import { ItemDeleteModal } from './ItemDeleteModal';
@@ -113,8 +114,8 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
         )}
       <Box display="flex" justifyContent="center">
         <Box display="flex" flexDirection="column" minWidth="80%">
-          {defaultValues && <Button m={2} variantColor="red" leftIcon="delete" onClick={onOpen}>Törlés</Button>}
-          <Button m={2} variantColor="yellow" leftIcon="close" onClick={onRequestClose}>Mégse</Button>
+          {defaultValues && <Button m={2} colorScheme="red" leftIcon={<DeleteIcon />} onClick={onOpen}>Törlés</Button>}
+          <Button m={2} colorScheme="yellow" leftIcon={<CloseIcon />} onClick={onRequestClose}>Mégse</Button>
           {defaultValues
           && (
           <ItemDeleteModal
@@ -125,7 +126,7 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
             closePreviousModal={onRequestClose}
           />
           )}
-          <Button m={2} variantColor="green" leftIcon="check" type="submit">{defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
+          <Button m={2} colorScheme="green" leftIcon={<CheckIcon />} type="submit">{defaultValues ? 'Módosítás mentése' : 'Mentés'}</Button>
         </Box>
       </Box>
     </form>
