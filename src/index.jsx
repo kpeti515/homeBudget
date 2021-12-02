@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBreakpoints } from '@chakra-ui/theme-tools';
 import './index.css';
+import { Provider } from 'react-redux';
 import { App } from './App';
 import * as serviceWorker from './serviceWorker';
+import store from './store/store';
 
 const breakpoints = createBreakpoints({
   sm: '360px',
@@ -18,9 +20,11 @@ const customTheme = extendTheme(overrides);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={customTheme}>
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={customTheme}>
+        <App />
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

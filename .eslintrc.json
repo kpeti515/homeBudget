@@ -21,11 +21,18 @@
   "rules": {
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
+    "implicit-arrow-linebreak": "off",
     "indent": "off",
     "operator-linebreak": "off",
     "comma-dangle": "off",
     "object-curly-newline": "off",
     "no-unused-vars": "warn",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowTernary": true
+      }
+    ],
     "react/jsx-one-expression-per-line": "off",
     "react/react-in-jsx-scope": "off",
     "func-names": [

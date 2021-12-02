@@ -14,19 +14,21 @@ import {
 
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { setDoc, doc } from 'firebase/firestore';
 import { CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
-import { budgetDb } from '../firebase/firebase';
+import { useDispatch } from 'react-redux';
 
 import { ItemDeleteModal } from './ItemDeleteModal';
+import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
+import { getToday } from '../helpers/functions/dateHelpers';
 
 export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
   const { handleSubmit, register } = useForm();
   const { id } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
 
   const toast = useToast();
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
     const inputs = {
@@ -36,8 +38,9 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
       date: data.date,
       isIncomeForCloth: !!data.isIncomeForCloth,
     };
-
-    await setDoc(doc(budgetDb, user, itemName), inputs);
+    defaultValues
+      ? dispatch(updateBudgetItem({ userName: user, itemName, inputs }))
+      : dispatch(addBudgetItem({ userName: user, itemName, inputs }));
 
     onRequestClose();
     toast({
@@ -47,7 +50,6 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
       isClosable: true,
     });
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl isRequired my={2}>
@@ -91,7 +93,7 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
       <FormControl isRequired my={2}>
         <FormLabel htmlFor="date">Dátum:</FormLabel>
         <Input
-          defaultValue={defaultValues && defaultValues.date}
+          defaultValue={defaultValues ? defaultValues.date : getToday()}
           id="date"
           placeholder="Kiadás összege"
           type="date"

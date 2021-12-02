@@ -12,9 +12,9 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 
-import { doc, deleteDoc } from 'firebase/firestore';
 import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
-import { budgetDb } from '../firebase/firebase';
+import { useDispatch } from 'react-redux';
+import { deleteBudgetItem } from '../store/budget/budgetSlice';
 
 export const ItemDeleteModal = ({
   onRequestCloseDeleteModal,
@@ -27,12 +27,13 @@ export const ItemDeleteModal = ({
   const bgColor = { light: 'white', dark: 'gray.700' };
   const color = { light: 'black', dark: 'white' };
   const toast = useToast();
+  const dispatch = useDispatch();
 
-  const deleteItem = async () => {
+  const deleteItem = () => {
     onRequestCloseDeleteModal();
     closePreviousModal();
 
-    await deleteDoc(doc(budgetDb, user, id));
+    dispatch(deleteBudgetItem({ userName: user, itemId: id }));
 
     toast({
       title: 'Törölve.',
