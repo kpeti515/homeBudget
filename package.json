@@ -3,6 +3,9 @@
   "name": "homebudget",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.11.0"
+  },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
