@@ -23,7 +23,7 @@ import { getToday } from '../helpers/functions/dateHelpers';
 
 export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
   const { handleSubmit, register } = useForm();
-  const { id } = useParams();
+  const { account } = useParams();
 
   const { isOpen, onOpen, onClose } = useDisclosure(); // deleteModal
 
@@ -91,7 +91,7 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
           ref={register}
         />
       </FormControl>
-      {id === 'Lóri' && (
+      {account === 'Lóri' && (
         <Checkbox
           defaultIsChecked={defaultValues && defaultValues.isIncomeForCloth}
           name="isIncomeForCloth"

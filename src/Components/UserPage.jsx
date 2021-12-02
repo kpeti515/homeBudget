@@ -27,23 +27,23 @@ require('numeral/locales/hu');
 numeral.locale('hu');
 
 export const UserPage = () => {
-  const { id } = useParams();
+  const { account } = useParams();
 
   const dispatch = useDispatch();
   const budget = useSelector(selectBudgetAccount);
 
   useEffect(() => {
-    if (!budget[id]) {
-      dispatch(fetchBudget(id));
+    if (!budget[account]) {
+      dispatch(fetchBudget(account));
     }
-  }, [dispatch, id]);
+  }, [dispatch, account]);
 
   let expenses;
   let incomes;
   let expenseForCloth;
   let incomeForCloth;
-  if (budget[id]) {
-    expenses = budget[id]
+  if (budget[account]) {
+    expenses = budget[account]
       .map((expenseList) => {
         if (
           typeof expenseList.expense === 'string' &&
@@ -55,7 +55,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    incomes = budget[id]
+    incomes = budget[account]
       .map((incomeList) => {
         if (
           typeof incomeList.income === 'string' &&
@@ -67,7 +67,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    expenseForCloth = budget[id]
+    expenseForCloth = budget[account]
       .map((expenseList) => {
         if (
           typeof expenseList.expense === 'string' &&
@@ -79,7 +79,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    incomeForCloth = budget[id]
+    incomeForCloth = budget[account]
       .map((income) => {
         if (
           typeof income.income === 'string' &&
@@ -114,14 +114,14 @@ export const UserPage = () => {
   return (
     <>
       <Heading as="h3" size="lg" m={2}>
-        {id} pénztárcája:{' '}
-        {id === 'Lóri'
+        {account} pénztárcája:{' '}
+        {account === 'Lóri'
           ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $')
           : numeral(incomes - expenses).format('0,0[.]00 $')}
       </Heading>
       {incomeForCloth - expenseForCloth !== 0 ? (
         <h4>
-          {id} ruhapénze:
+          {account} ruhapénze:
           {incomeForCloth - expenseForCloth} HUF
         </h4>
       ) : null}
@@ -183,12 +183,12 @@ export const UserPage = () => {
       />
 
       <ExpenseModal
-        user={id}
+        user={account}
         isOpen={expenseModalIsOpen}
         onRequestClose={closeExpenseModal}
       />
       <IncomeModal
-        user={id}
+        user={account}
         isOpen={incomeModalIsOpen}
         onRequestClose={closeIncomeModal}
       />

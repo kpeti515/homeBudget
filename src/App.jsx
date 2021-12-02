@@ -65,7 +65,7 @@ export const App = () => {
             {!user ? (
               <Redirect to="/login" />
             ) : (
-              <Route path="/:id">
+              <Route path="/:account">
                 <UserPage />
               </Route>
             )}

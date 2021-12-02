@@ -23,7 +23,7 @@ require('numeral/locales/hu');
 numeral.locale('hu');
 
 export const BudgetItem = ({ budget, showExpenses, showIncomes }) => {
-  const { id } = useParams();
+  const { account } = useParams();
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -55,7 +55,7 @@ export const BudgetItem = ({ budget, showExpenses, showIncomes }) => {
           <StatHelpText ml={2}>{budget.date}</StatHelpText>
         </Stat>
         <IncomeModal
-          user={id}
+          user={account}
           defaultValues={budget}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -90,7 +90,7 @@ export const BudgetItem = ({ budget, showExpenses, showIncomes }) => {
           <StatHelpText ml={2}>{budget.date}</StatHelpText>
         </Stat>
         <ExpenseModal
-          user={id}
+          user={account}
           defaultValues={budget}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}

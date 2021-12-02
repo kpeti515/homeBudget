@@ -7,9 +7,9 @@ import { selectBudgetAccount } from '../store/budget/budgetSlice';
 export const BudgetHistory = ({ showExpenses, showIncomes, sortBy }) => {
   const userBudget = useSelector(selectBudgetAccount);
 
-  const { id } = useParams();
-  if (userBudget[id] !== undefined) {
-    const copyUserBudget = [...userBudget[id]];
+  const { account } = useParams();
+  if (userBudget[account] !== undefined) {
+    const copyUserBudget = [...userBudget[account]];
     return sortBy === 'date'
       ? copyUserBudget
           .sort((a, b) => b.date.localeCompare(a.date))
