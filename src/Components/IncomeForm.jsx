@@ -14,11 +14,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { setDoc, doc } from 'firebase/firestore';
 import { CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
-import { budgetDb } from '../firebase/firebase';
+import { useDispatch } from 'react-redux';
 
 import { ItemDeleteModal } from './ItemDeleteModal';
+import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
+import { getToday } from '../helpers/functions/dateHelpers';
 
 export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
   const { handleSubmit, register } = useForm();
@@ -27,6 +28,7 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // deleteModal
 
   const toast = useToast();
+  const dispatch = useDispatch();
   const onSubmit = async (data) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
@@ -36,8 +38,9 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
       date: data.date,
       isIncomeForCloth: !!data.isIncomeForCloth,
     };
-
-    await setDoc(doc(budgetDb, user, itemName), inputs);
+    defaultValues
+      ? dispatch(updateBudgetItem({ userName: user, itemName, inputs }))
+      : dispatch(addBudgetItem({ userName: user, itemName, inputs }));
     onRequestClose();
     toast({
       title: 'Mentve.',
@@ -79,7 +82,7 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
       <FormControl isRequired my={2}>
         <FormLabel htmlFor="date">Dátum:</FormLabel>
         <Input
-          defaultValue={defaultValues && defaultValues.date}
+          defaultValue={defaultValues ? defaultValues.date : getToday()}
           id="date"
           placeholder="Kiadás összege"
           type="date"

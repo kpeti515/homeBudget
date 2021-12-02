@@ -1,7 +1,7 @@
 /* eslint-disable block-scoped-var */
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/jsx-no-bind */
-import { useReducer, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import numeral from 'numeral';
 import {
@@ -14,15 +14,13 @@ import {
   Flex,
   FormLabel,
 } from '@chakra-ui/react';
-import { collection, getDocs } from 'firebase/firestore';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
-import budgetReducer from '../Reducers/budgetReducer';
+import { fetchBudget, selectBudgetAccount } from '../store/budget/budgetSlice';
 
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 import { BudgetHistory } from './BudgetHistory';
-import { budgetDb } from '../firebase/firebase';
-import FireBaseContext from '../firebase/FirebaseContext';
 
 require('numeral/locales/hu');
 
@@ -30,31 +28,22 @@ numeral.locale('hu');
 
 export const UserPage = () => {
   const { id } = useParams();
-  const [userBudget, dispatch] = useReducer(budgetReducer, []);
 
-  const getBudget = async (db, identifier) => {
-    const budgetCollection = collection(db, identifier);
-    const budgetSnapshot = await getDocs(budgetCollection);
-    const budgetList = budgetSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    if (budgetList) {
-      dispatch({ type: 'LIST_BUDGET', budgetList });
-    }
-    return budgetList;
-  };
+  const dispatch = useDispatch();
+  const budget = useSelector(selectBudgetAccount);
 
   useEffect(() => {
-    getBudget(budgetDb, id);
-  }, [id]);
+    if (!budget[id]) {
+      dispatch(fetchBudget(id));
+    }
+  }, [dispatch, id]);
 
   let expenses;
   let incomes;
   let expenseForCloth;
   let incomeForCloth;
-  if (userBudget) {
-    expenses = userBudget
+  if (budget[id]) {
+    expenses = budget[id]
       .map((expenseList) => {
         if (
           typeof expenseList.expense === 'string' &&
@@ -66,7 +55,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    incomes = userBudget
+    incomes = budget[id]
       .map((incomeList) => {
         if (
           typeof incomeList.income === 'string' &&
@@ -78,7 +67,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    expenseForCloth = userBudget
+    expenseForCloth = budget[id]
       .map((expenseList) => {
         if (
           typeof expenseList.expense === 'string' &&
@@ -90,7 +79,7 @@ export const UserPage = () => {
       })
       .reduce((sum, value) => sum + value, 0);
 
-    incomeForCloth = userBudget
+    incomeForCloth = budget[id]
       .map((income) => {
         if (
           typeof income.income === 'string' &&
@@ -122,7 +111,6 @@ export const UserPage = () => {
   }
 
   const [sortType, setSortType] = useState('date');
-
   return (
     <>
       <Heading as="h3" size="lg" m={2}>
@@ -188,13 +176,11 @@ export const UserPage = () => {
         />
       </Flex>
 
-      <FireBaseContext.Provider value={{ userBudget, dispatch }}>
-        <BudgetHistory
-          showExpenses={showExpenses}
-          showIncomes={showIncomes}
-          sortBy={sortType}
-        />
-      </FireBaseContext.Provider>
+      <BudgetHistory
+        showExpenses={showExpenses}
+        showIncomes={showIncomes}
+        sortBy={sortType}
+      />
 
       <ExpenseModal
         user={id}

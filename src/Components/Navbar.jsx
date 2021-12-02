@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
 
 import { Box, IconButton, Heading, Flex, Text } from '@chakra-ui/react';
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectCurrentUser } from '../store/user/userSlice';
 
 const MenuItems = ({ children }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -13,20 +14,14 @@ const MenuItems = ({ children }) => (
   </Text>
 );
 
-export const Navbar = ({ user, setUser, colorMode, toggleColorMode }) => {
+export const Navbar = ({ colorMode, toggleColorMode }) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
-  const auth = getAuth();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
 
   const handleLogout = async () => {
-    await signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-    setUser(false);
+    dispatch(logout());
   };
   return (
     <Flex
@@ -112,9 +107,4 @@ MenuItems.propTypes = {
 Navbar.propTypes = {
   colorMode: PropTypes.string.isRequired,
   toggleColorMode: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired,
-  user: PropTypes.object,
-};
-Navbar.defaultProps = {
-  user: null,
 };
