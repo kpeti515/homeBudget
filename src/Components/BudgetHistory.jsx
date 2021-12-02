@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
+import Proptypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import { Skeleton, Stack } from '@chakra-ui/react';
 import { BudgetItem } from './BudgetItem';
 
 import { selectBudgetAccount } from '../store/budget/budgetSlice';
@@ -36,5 +38,17 @@ export const BudgetHistory = ({ showExpenses, showIncomes, sortBy }) => {
             />
           ));
   }
-  return null;
+  return (
+    <Stack>
+      <Skeleton height="90px" />
+      <Skeleton height="90px" />
+      <Skeleton height="90px" />
+    </Stack>
+  );
+};
+
+BudgetHistory.propTypes = {
+  showExpenses: Proptypes.bool.isRequired,
+  showIncomes: Proptypes.bool.isRequired,
+  sortBy: Proptypes.string.isRequired,
 };
