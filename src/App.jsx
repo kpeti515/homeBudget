@@ -13,6 +13,7 @@ import { Navbar } from './Components/Navbar';
 import { UserPage } from './Components/UserPage';
 import { Login } from './Components/Login';
 import { login, selectCurrentUser } from './store/user/userSlice';
+import { LoadingPage } from './Components/LoadingPage';
 
 export const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,7 @@ export const App = () => {
   const bgColor = { light: 'white', dark: 'black' };
   const color = { light: 'black', dark: 'white' };
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   }
   return (
     <Router>

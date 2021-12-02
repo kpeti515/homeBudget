@@ -1,5 +1,3 @@
-/* eslint-disable block-scoped-var */
-/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/jsx-no-bind */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,6 +11,7 @@ import {
   Switch,
   Flex,
   FormLabel,
+  Spinner,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
@@ -114,15 +113,20 @@ export const UserPage = () => {
   return (
     <>
       <Heading as="h3" size="lg" m={2}>
-        {account} pénztárcája:{' '}
-        {account === 'Lóri'
-          ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $')
-          : numeral(incomes - expenses).format('0,0[.]00 $')}
+        {account} pénztárcája: {!budget[account] && <Spinner size="md" />}
+        {budget[account] &&
+          (account === 'Lóri'
+            ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $')
+            : numeral(incomes - expenses).format('0,0[.]00 $'))}
       </Heading>
-      {incomeForCloth - expenseForCloth !== 0 ? (
+      {account === 'Lóri' ? (
         <h4>
           {account} ruhapénze:
-          {incomeForCloth - expenseForCloth} HUF
+          {budget[account] ? (
+            `${incomeForCloth - expenseForCloth} HUF`
+          ) : (
+            <Spinner size="sm" />
+          )}
         </h4>
       ) : null}
       <Box display="flex" flexWrap="wrap" justifyContent="center">
