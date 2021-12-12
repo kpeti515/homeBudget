@@ -16,6 +16,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "env-cmd": "^10.1.0",
     "firebase": "^9.5.0",
     "firebaseui": "^6.0.0",
     "framer-motion": "^4.1.17",
@@ -35,7 +36,9 @@
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build"
+    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build:production": "env-cmd -f .env.production npm run build",
+    "build:winProduction": "env-cmd -f .env.production npm run winBuild"
   },
   "eslintConfig": {
     "extends": "react-app"
