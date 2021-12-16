@@ -33,12 +33,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "build:production": "env-cmd -f .env.production npm run build",
-    "build:winProduction": "env-cmd -f .env.production npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build:production": "env-cmd -f .env.production npm run build",
+    "build:winProduction": "env-cmd -f .env.production npm run winBuild"
   },
   "eslintConfig": {
     "extends": "react-app"
