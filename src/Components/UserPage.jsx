@@ -112,7 +112,7 @@ export const UserPage = () => {
   const [sortType, setSortType] = useState('date');
   return (
     <>
-      <Heading as="h3" size="lg" m={2}>
+      <Heading as="h2" size="lg" m={2}>
         {account} pénztárcája: {!budget[account] && <Spinner size="md" />}
         {budget[account] &&
           (account === 'Lóri'

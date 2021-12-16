@@ -10,10 +10,10 @@ export const BudgetHistory = ({ showExpenses, showIncomes, sortBy }) => {
   const userBudget = useSelector(selectBudgetAccount);
 
   const { account } = useParams();
-  if (userBudget[account] !== undefined) {
-    const copyUserBudget = [...userBudget[account]];
+  if (userBudget[account]) {
+    const currentBudget = [...userBudget[account]];
     return sortBy === 'date'
-      ? copyUserBudget
+      ? currentBudget
           .sort((a, b) => b.date.localeCompare(a.date))
           .map((budget) => (
             <BudgetItem
@@ -23,7 +23,7 @@ export const BudgetHistory = ({ showExpenses, showIncomes, sortBy }) => {
               showIncomes={showIncomes}
             />
           ))
-      : copyUserBudget
+      : currentBudget
           .sort((a, b) => {
             const amountA = a.expense || a.income;
             const amountB = b.expense || b.income;

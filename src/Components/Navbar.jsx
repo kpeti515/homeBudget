@@ -19,7 +19,7 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
   return (
@@ -39,6 +39,7 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
             bg="teal.500"
             mx={4}
             onClick={toggleColorMode}
+            aria-label="Webpage color mode"
             icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
           />
         </Heading>
@@ -91,6 +92,7 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
         <img
           src={user.photoURL}
           width="40px"
+          height="40px"
           style={{ borderRadius: '50%' }}
           alt="avatar"
         />
