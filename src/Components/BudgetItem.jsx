@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -17,10 +16,6 @@ import { EditIcon } from '@chakra-ui/icons';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 
-require('numeral/locales/hu');
-
-numeral.locale('hu');
-
 const RegularBudgetItem = ({ type, budget }) => {
   const { account } = useParams();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -35,8 +30,8 @@ const RegularBudgetItem = ({ type, budget }) => {
         <Box className="display__flex" justifyContent="space-between">
           <StatNumber ml={4} fontSize={20}>
             {type === 'expense'
-              ? `-${numeral(budget.expense).format('0,0[.]00 $')}`
-              : `+${numeral(budget.income).format('0,0[.]00 $')}`}
+              ? `-${Number(budget.expense).toLocaleString('HU')} Ft`
+              : `+${Number(budget.income).toLocaleString('HU')} Ft`}
           </StatNumber>
           <Button
             leftIcon={<EditIcon />}
