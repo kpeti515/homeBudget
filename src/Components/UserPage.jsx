@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import numeral from 'numeral';
 import {
   Button,
   Heading,
@@ -20,10 +19,6 @@ import { fetchBudget, selectBudgetAccount } from '../store/budget/budgetSlice';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 import { BudgetHistory } from './BudgetHistory';
-
-require('numeral/locales/hu');
-
-numeral.locale('hu');
 
 export const UserPage = () => {
   const { account } = useParams();
@@ -112,12 +107,12 @@ export const UserPage = () => {
   const [sortType, setSortType] = useState('date');
   return (
     <>
-      <Heading as="h3" size="lg" m={2}>
+      <Heading as="h2" size="lg" m={2}>
         {account} pénztárcája: {!budget[account] && <Spinner size="md" />}
         {budget[account] &&
           (account === 'Lóri'
-            ? numeral(incomes - expenses - incomeForCloth).format('0,0[.]00 $')
-            : numeral(incomes - expenses).format('0,0[.]00 $'))}
+            ? `${(incomes - expenses - incomeForCloth).toLocaleString('HU')} Ft`
+            : `${(incomes - expenses).toLocaleString('HU')} Ft`)}
       </Heading>
       {account === 'Lóri' ? (
         <h4>

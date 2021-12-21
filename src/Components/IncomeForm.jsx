@@ -29,7 +29,7 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
 
   const toast = useToast();
   const dispatch = useDispatch();
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
     const inputs = {

@@ -2,15 +2,28 @@ const path = require('path');
 const express = require('express');
 
 const app = express();
-const publicPath = path.join(__dirname, '..', 'public');
-const port = process.env.PORT || 3000;
-app.use(express.static(publicPath));
+const buildPath = path.join(__dirname, '..', 'build');
+const port = process.env.PORT || 8789;
+const expressStaticGzip = require('express-static-gzip');
+
+app.use(
+  '/',
+  expressStaticGzip(buildPath, {
+    enableBrotli: true,
+    customCompressions: [
+      {
+        encodingName: 'deflate',
+        fileExtension: 'zz',
+      },
+    ],
+    orderPreference: ['br'],
+  })
+);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 app.listen(port, () => {
-  console.log('server is up!');
-  console.log(publicPath);
+  console.log(`Server is up at port ${port}!`);
 });
