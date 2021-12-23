@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-import PropTypes from 'prop-types';
 import {
   useColorMode,
   Modal,
@@ -9,53 +7,39 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
+import { ExpenseForm } from './ExpenseForm';
+import { Expense } from '../helpers/interfaces';
 
-import { IncomeForm } from './IncomeForm';
-
-export const IncomeModal = ({
+export const ExpenseModal = ({
   isOpen,
   onRequestClose,
-  defaultValues,
   user,
+  defaultValues,
+}: {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  user: string;
+  defaultValues?: Expense;
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };
   return (
-    <Modal
-      bg={bgColor[colorMode]}
-      color={color[colorMode]}
-      isOpen={isOpen}
-      onClose={onRequestClose}
-    >
+    <Modal isOpen={isOpen} onClose={onRequestClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
-          {defaultValues ? 'Bevétel szerkesztése' : 'Bevétel rögzítése'}
+          {defaultValues ? 'Kiadás szerkesztése' : 'Kiadás rögzítése'}
         </ModalHeader>
         <ModalCloseButton bg={bgColor[colorMode]} color={color[colorMode]} />
         <ModalBody bg={bgColor[colorMode]} color={color[colorMode]}>
-          <IncomeForm
-            isOpen={isOpen}
+          <ExpenseForm
+            user={user}
             onRequestClose={onRequestClose}
             defaultValues={defaultValues}
-            user={user}
           />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
-};
-
-IncomeModal.propTypes = {
-  defaultValues: PropTypes.shape({
-    id: PropTypes.string,
-    income: PropTypes.string,
-    reason: PropTypes.string,
-    isIncomeForCloth: PropTypes.bool,
-    date: PropTypes.string,
-  }),
-  user: PropTypes.string,
-  onRequestClose: PropTypes.func,
-  isOpen: PropTypes.bool,
 };

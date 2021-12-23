@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Box, IconButton, Heading, Flex, Text } from '@chakra-ui/react';
@@ -7,13 +6,19 @@ import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectCurrentUser } from '../store/user/userSlice';
 
-const MenuItems = ({ children }) => (
+const MenuItems = ({ children }: { children: React.ReactNode }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
     {children}
   </Text>
 );
 
-export const Navbar = ({ colorMode, toggleColorMode }) => {
+export const Navbar = ({
+  colorMode,
+  toggleColorMode,
+}: {
+  colorMode: string;
+  toggleColorMode: () => void;
+}) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
   const dispatch = useDispatch();
@@ -99,13 +104,4 @@ export const Navbar = ({ colorMode, toggleColorMode }) => {
       )}
     </Flex>
   );
-};
-
-MenuItems.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-Navbar.propTypes = {
-  colorMode: PropTypes.string.isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
 };

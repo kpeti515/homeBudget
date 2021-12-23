@@ -1,5 +1,6 @@
 // eslint-disable-next-line prettier/prettier
-const displayWithTwoDigits = (digits) => (`${digits}`.length === 1 ? `0${digits}` : digits);
+const displayWithTwoDigits = (digits: number) =>
+  `${digits}`.length === 1 ? `0${digits}` : digits;
 export const getToday = () => {
   const today = new Date();
   const dd = displayWithTwoDigits(today.getDate());

@@ -1,6 +1,4 @@
-/* eslint-disable react/require-default-props */
 import { useForm } from 'react-hook-form';
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -20,15 +18,30 @@ import { useDispatch } from 'react-redux';
 import { ItemDeleteModal } from './ItemDeleteModal';
 import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
 import { getToday } from '../helpers/functions/dateHelpers';
+import { Expense } from '../helpers/interfaces';
 
-export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
+export const ExpenseForm = ({
+  defaultValues,
+  user,
+  onRequestClose,
+}: {
+  defaultValues?: Expense;
+  user: string;
+  onRequestClose: () => void;
+}) => {
   const { handleSubmit, register } = useForm();
-  const { account } = useParams();
+  const { account } = useParams<{ account: string }>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
   const toast = useToast();
-  const onSubmit = (data) => {
+  const onSubmit = (data: {
+    expense: string;
+    item: string;
+    description: string;
+    date: string;
+    isIncomeForCloth?: boolean;
+  }) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
     const inputs = {
@@ -154,17 +167,4 @@ export const ExpenseForm = ({ defaultValues, user, onRequestClose }) => {
       </Box>
     </form>
   );
-};
-
-ExpenseForm.propTypes = {
-  defaultValues: PropTypes.shape({
-    id: PropTypes.string,
-    expense: PropTypes.string,
-    isIncomeForCloth: PropTypes.bool,
-    date: PropTypes.string,
-    description: PropTypes.string,
-    item: PropTypes.string,
-  }),
-  user: PropTypes.string.isRequired,
-  onRequestClose: PropTypes.func.isRequired,
 };

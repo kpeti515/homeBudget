@@ -15,7 +15,7 @@ import { Login } from './Components/Login';
 import { login, selectCurrentUser } from './store/user/userSlice';
 import { LoadingPage } from './Components/LoadingPage';
 
-export const App = () => {
+export const App: React.FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector(selectCurrentUser);
   const auth = getAuth();
@@ -28,7 +28,7 @@ export const App = () => {
       }
       setIsLoading(false);
     });
-  }, [user]);
+  }, [auth, dispatch, user]);
 
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'black' };

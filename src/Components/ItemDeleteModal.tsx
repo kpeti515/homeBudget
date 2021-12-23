@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -22,6 +21,12 @@ export const ItemDeleteModal = ({
   user,
   id,
   isOpen,
+}: {
+  onRequestCloseDeleteModal: VoidFunction;
+  closePreviousModal: VoidFunction;
+  user: string;
+  id: string;
+  isOpen: boolean;
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.700' };
@@ -44,14 +49,7 @@ export const ItemDeleteModal = ({
   };
 
   return (
-    <Modal
-      bg={bgColor[colorMode]}
-      color={color[colorMode]}
-      isOpen={isOpen}
-      contentLabel="Elem törlése"
-      onClose={onRequestCloseDeleteModal}
-      closePreviousModal={closePreviousModal}
-    >
+    <Modal isOpen={isOpen} onClose={onRequestCloseDeleteModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
@@ -83,12 +81,4 @@ export const ItemDeleteModal = ({
       </ModalContent>
     </Modal>
   );
-};
-
-ItemDeleteModal.propTypes = {
-  id: PropTypes.string.isRequired,
-  onRequestCloseDeleteModal: PropTypes.func.isRequired,
-  closePreviousModal: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.string.isRequired,
 };

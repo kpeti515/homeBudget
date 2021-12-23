@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Button,
@@ -18,73 +17,25 @@ import { fetchBudget, selectBudgetAccount } from '../store/budget/budgetSlice';
 
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
-import { BudgetHistory } from './BudgetHistory';
+import BudgetHistory from './BudgetHistory';
+import { Budget } from '../helpers/interfaces';
 
 export const UserPage = () => {
-  const { account } = useParams();
+  const { account } = useParams<{ account: string }>();
 
   const dispatch = useDispatch();
   const budget = useSelector(selectBudgetAccount);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!budget[account]) {
-      dispatch(fetchBudget(account));
-    }
-  }, [dispatch, account]);
-
-  let expenses;
-  let incomes;
-  let expenseForCloth;
-  let incomeForCloth;
-  if (budget[account]) {
-    expenses = budget[account]
-      .map((expenseList) => {
-        if (
-          typeof expenseList.expense === 'string' &&
-          expenseList.isIncomeForCloth !== true
-        ) {
-          return parseInt(expenseList.expense, 10);
-        }
-        return 0;
-      })
-      .reduce((sum, value) => sum + value, 0);
-
-    incomes = budget[account]
-      .map((incomeList) => {
-        if (
-          typeof incomeList.income === 'string' &&
-          expenses.isIncomeForCloth !== true
-        ) {
-          return parseInt(incomeList.income, 10);
-        }
-        return 0;
-      })
-      .reduce((sum, value) => sum + value, 0);
-
-    expenseForCloth = budget[account]
-      .map((expenseList) => {
-        if (
-          typeof expenseList.expense === 'string' &&
-          expenseList.isIncomeForCloth === true
-        ) {
-          return parseInt(expenseList.expense, 10);
-        }
-        return 0;
-      })
-      .reduce((sum, value) => sum + value, 0);
-
-    incomeForCloth = budget[account]
-      .map((income) => {
-        if (
-          typeof income.income === 'string' &&
-          income.isIncomeForCloth === true
-        ) {
-          return parseInt(income.income, 10);
-        }
-        return 0;
-      })
-      .reduce((sum, value) => sum + value, 0);
-  }
+    (async () => {
+      if (!budget[account]) {
+        setIsLoading(true);
+        await dispatch(await fetchBudget(account));
+        setIsLoading(false);
+      }
+    })();
+  }, [dispatch, account, budget]);
 
   const [showExpenses, changeShowExpenses] = useState(true);
   const [showIncomes, changeShowIncomes] = useState(true);
@@ -104,23 +55,60 @@ export const UserPage = () => {
     setIncomeModalIsOpen(false);
   }
 
-  const [sortType, setSortType] = useState('date');
+  const [sortType, setSortType] = useState<'date' | 'amount'>('date');
+
+  const expenses = budget[account]
+    ?.map((budgetItem: Budget) => {
+      if ('expense' in budgetItem && budgetItem.isIncomeForCloth === false) {
+        return parseInt(budgetItem.expense, 10);
+      }
+      return 0;
+    })
+    .reduce((sum: number, value: number) => sum + value, 0);
+
+  const incomes = budget[account]
+    ?.map((budgetItem: Budget) => {
+      if ('income' in budgetItem && budgetItem.isIncomeForCloth === false) {
+        return parseInt(budgetItem.income, 10);
+      }
+      return 0;
+    })
+    .reduce((sum: number, value: number) => sum + value, 0);
+
+  const expenseForCloth = budget[account]
+    ?.map((budgetItem: Budget) => {
+      if ('expense' in budgetItem && budgetItem.isIncomeForCloth === true) {
+        return parseInt(budgetItem.expense, 10);
+      }
+      return 0;
+    })
+    .reduce((sum: number, value: number) => sum + value, 0);
+
+  const incomeForCloth = budget[account]
+    ?.map((budgetItem: Budget) => {
+      if ('income' in budgetItem && budgetItem.isIncomeForCloth === true) {
+        return parseInt(budgetItem.income, 10);
+      }
+      return 0;
+    })
+    .reduce((sum: number, value: number) => sum + value, 0);
   return (
     <>
       <Heading as="h2" size="lg" m={2}>
-        {account} pénztárcája: {!budget[account] && <Spinner size="md" />}
-        {budget[account] &&
-          (account === 'Lóri'
-            ? `${(incomes - expenses - incomeForCloth).toLocaleString('HU')} Ft`
-            : `${(incomes - expenses).toLocaleString('HU')} Ft`)}
+        {account} pénztárcája:
+        {isLoading ? (
+          <Spinner size="md" />
+        ) : (
+          `${(incomes - expenses).toLocaleString('hu')} Ft`
+        )}
       </Heading>
       {account === 'Lóri' ? (
         <h4>
-          {account} ruhapénze:
-          {budget[account] ? (
-            `${incomeForCloth - expenseForCloth} HUF`
-          ) : (
+          {account} ruhapénze:&nbsp;
+          {isLoading ? (
             <Spinner size="sm" />
+          ) : (
+            `${(incomeForCloth - expenseForCloth).toLocaleString('hu')} HUF`
           )}
         </h4>
       ) : null}
@@ -148,7 +136,11 @@ export const UserPage = () => {
       </Box>
       <Box display="flex">
         <Text m={2}>Számlatörténet:</Text>
-        <Select onChange={(e) => setSortType(e.target.value)}>
+        <Select
+          onChange={(e) =>
+            setSortType(e.target.value as SetStateAction<'date' | 'amount'>)
+          }
+        >
           <option value="date">Dátum alapján</option>
           <option value="amount">Összeg alapján</option>
         </Select>
