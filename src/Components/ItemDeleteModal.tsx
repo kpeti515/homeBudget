@@ -38,7 +38,7 @@ export const ItemDeleteModal = ({
     onRequestCloseDeleteModal();
     closePreviousModal();
 
-    dispatch(deleteBudgetItem({ userName: user, itemId: id }));
+    dispatch(deleteBudgetItem({ userName: user, itemName: id }));
 
     toast({
       title: 'Törölve.',

@@ -18,14 +18,14 @@ import { useDispatch } from 'react-redux';
 import { ItemDeleteModal } from './ItemDeleteModal';
 import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
 import { getToday } from '../helpers/functions/dateHelpers';
-import { Expense } from '../helpers/interfaces';
+import { ExpenseItemType } from '../helpers/interfaces';
 
 export const ExpenseForm = ({
   defaultValues,
   user,
   onRequestClose,
 }: {
-  defaultValues?: Expense;
+  defaultValues?: ExpenseItemType;
   user: string;
   onRequestClose: () => void;
 }) => {

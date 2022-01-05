@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import { IncomeForm } from './IncomeForm';
-import { Income } from '../helpers/interfaces';
+import { IncomeItemType } from '../helpers/interfaces';
 
 export const IncomeModal = ({
   isOpen,
@@ -20,7 +20,7 @@ export const IncomeModal = ({
 }: {
   isOpen: boolean;
   onRequestClose: VoidFunction;
-  defaultValues?: Income;
+  defaultValues?: IncomeItemType;
   user: string;
 }) => {
   const { colorMode } = useColorMode();

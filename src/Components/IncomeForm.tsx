@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 import { ItemDeleteModal } from './ItemDeleteModal';
 import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
 import { getToday } from '../helpers/functions/dateHelpers';
-import { Income } from '../helpers/interfaces';
+import { IncomeItemType } from '../helpers/interfaces';
 
 export const IncomeForm = ({
   defaultValues,
@@ -27,7 +27,7 @@ export const IncomeForm = ({
   onRequestClose,
 }: {
   onRequestClose: VoidFunction;
-  defaultValues?: Income;
+  defaultValues?: IncomeItemType;
   user: string;
 }) => {
   const { handleSubmit, register } = useForm();

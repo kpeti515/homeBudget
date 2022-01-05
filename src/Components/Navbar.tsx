@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { Box, IconButton, Heading, Flex, Text } from '@chakra-ui/react';
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout, selectCurrentUser } from '../store/user/userSlice';
+import { useTypedSelector } from '../store/store';
 
 const MenuItems = ({ children }: { children: React.ReactNode }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -22,7 +23,7 @@ export const Navbar = ({
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
+  const user = useTypedSelector(selectCurrentUser);
 
   const handleLogout = () => {
     dispatch(logout());

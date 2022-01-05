@@ -1,5 +1,4 @@
-export interface Expense {
-  id: string;
+export interface ExpenseItemForm {
   expense: string;
   isIncomeForCloth: boolean;
   date: string;
@@ -7,18 +6,72 @@ export interface Expense {
   item: string;
 }
 
-export interface Income {
+// export type ExpenseItemType = ExpenseItemForm & { id: string };
+export interface ExpenseItemType extends ExpenseItemForm {
   id: string;
+}
+
+export interface IncomeItemForm {
   income: string;
   reason: string;
   isIncomeForCloth: boolean;
   date: string;
 }
 
-export type Budget = Expense | Income;
+// export type IncomeItemType = IncomeItemForm & { id: string };
+export interface IncomeItemType extends IncomeItemForm {
+  id: string;
+}
+
+export type BudgetItemType = ExpenseItemType | IncomeItemType;
+
+export type BudgetFormType = IncomeItemForm | ExpenseItemForm;
+
+export interface BudgetForm {
+  userName: string;
+  itemName: string;
+  inputs?: BudgetFormType;
+}
 
 export interface BudgetHistoryProps {
   showExpenses: boolean;
   showIncomes: boolean;
   sortBy: 'date' | 'amount';
+}
+
+interface UserBasicData {
+  uid: string;
+  email: string;
+  displayName: string;
+  providerId: string;
+  photoURL: string;
+  phoneNumber: null | string;
+}
+
+interface TokenManagementType {
+  refreshToken: string;
+  accessToken: string;
+  expirationTime: number;
+}
+
+interface UserMetaData extends UserBasicData {
+  emailVerified: boolean;
+  isAnonymous: boolean;
+  providerData: Array<Record<string, UserBasicData>>;
+  stsTokenManager: TokenManagementType;
+  createdAt: string;
+  lastLoginAt: string;
+  apiKey: string;
+  appName: string;
+}
+
+export interface UserState {
+  currentUser: null | UserMetaData;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+}
+
+export interface BudgetState {
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  accounts: Record<string, Array<BudgetItemType>>;
+  error: undefined | string;
 }

@@ -14,9 +14,9 @@ import '../css/BudgetItem.css';
 import { EditIcon } from '@chakra-ui/icons';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
-import { Budget } from '../helpers/interfaces';
+import { BudgetItemType } from '../helpers/interfaces';
 
-const RegularBudgetItem = ({ budget }: { budget: Budget }) => {
+const RegularBudgetItem = ({ budget }: { budget: BudgetItemType }) => {
   const { account } = useParams<{ account: string }>();
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -68,7 +68,7 @@ export const BudgetItem = ({
   showExpenses,
   showIncomes,
 }: {
-  budget: Budget;
+  budget: BudgetItemType;
   showExpenses: boolean;
   showIncomes: boolean;
 }) => {

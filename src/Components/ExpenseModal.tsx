@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import { ExpenseForm } from './ExpenseForm';
-import { Expense } from '../helpers/interfaces';
+import { ExpenseItemType } from '../helpers/interfaces';
 
 export const ExpenseModal = ({
   isOpen,
@@ -19,7 +19,7 @@ export const ExpenseModal = ({
   isOpen: boolean;
   onRequestClose: () => void;
   user: string;
-  defaultValues?: Expense;
+  defaultValues?: ExpenseItemType;
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };

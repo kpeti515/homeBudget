@@ -11,20 +11,20 @@ import {
   FormLabel,
   Spinner,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { fetchBudget, selectBudgetAccount } from '../store/budget/budgetSlice';
 
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 import BudgetHistory from './BudgetHistory';
-import { Budget } from '../helpers/interfaces';
+import { useTypedSelector } from '../store/store';
 
 export const UserPage = () => {
   const { account } = useParams<{ account: string }>();
 
   const dispatch = useDispatch();
-  const budget = useSelector(selectBudgetAccount);
+  const budget = useTypedSelector(selectBudgetAccount);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const UserPage = () => {
   const [sortType, setSortType] = useState<'date' | 'amount'>('date');
 
   const expenses = budget[account]
-    ?.map((budgetItem: Budget) => {
+    ?.map((budgetItem) => {
       if ('expense' in budgetItem && budgetItem.isIncomeForCloth === false) {
         return parseInt(budgetItem.expense, 10);
       }
@@ -67,7 +67,7 @@ export const UserPage = () => {
     .reduce((sum: number, value: number) => sum + value, 0);
 
   const incomes = budget[account]
-    ?.map((budgetItem: Budget) => {
+    ?.map((budgetItem) => {
       if ('income' in budgetItem && budgetItem.isIncomeForCloth === false) {
         return parseInt(budgetItem.income, 10);
       }
@@ -76,7 +76,7 @@ export const UserPage = () => {
     .reduce((sum: number, value: number) => sum + value, 0);
 
   const expenseForCloth = budget[account]
-    ?.map((budgetItem: Budget) => {
+    ?.map((budgetItem) => {
       if ('expense' in budgetItem && budgetItem.isIncomeForCloth === true) {
         return parseInt(budgetItem.expense, 10);
       }
@@ -85,7 +85,7 @@ export const UserPage = () => {
     .reduce((sum: number, value: number) => sum + value, 0);
 
   const incomeForCloth = budget[account]
-    ?.map((budgetItem: Budget) => {
+    ?.map((budgetItem) => {
       if ('income' in budgetItem && budgetItem.isIncomeForCloth === true) {
         return parseInt(budgetItem.income, 10);
       }
