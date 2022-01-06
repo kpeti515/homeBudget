@@ -4,14 +4,17 @@ import { Skeleton, Stack } from '@chakra-ui/react';
 import { BudgetItem } from './BudgetItem';
 
 import { selectBudgetAccount } from '../store/budget/budgetSlice';
-import { BudgetHistoryProps } from '../helpers/interfaces';
+import { AccountParam, BudgetHistoryProps } from '../helpers/interfaces';
 import { useTypedSelector } from '../store/store';
 
-const BudgetHistory: React.FC<BudgetHistoryProps> = (props) => {
-  const { showExpenses, showIncomes, sortBy } = props;
+const BudgetHistory: React.FC<BudgetHistoryProps> = ({
+  showExpenses,
+  showIncomes,
+  sortBy,
+}: BudgetHistoryProps) => {
   const userBudget = useTypedSelector(selectBudgetAccount);
 
-  const { account } = useParams<{ account: string }>();
+  const { account } = useParams<AccountParam>();
   if (userBudget[account]) {
     const currentBudget = [...userBudget[account]];
     return (
@@ -54,4 +57,4 @@ const BudgetHistory: React.FC<BudgetHistoryProps> = (props) => {
   );
 };
 
-export default React.memo<BudgetHistoryProps>(BudgetHistory);
+export default React.memo(BudgetHistory);

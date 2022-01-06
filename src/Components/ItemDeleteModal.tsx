@@ -14,20 +14,15 @@ import {
 import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { deleteBudgetItem } from '../store/budget/budgetSlice';
+import { ItemDeleteModalProps } from '../helpers/interfaces';
 
-export const ItemDeleteModal = ({
+export const ItemDeleteModal: React.FC<ItemDeleteModalProps> = ({
   onRequestCloseDeleteModal,
   closePreviousModal,
   user,
   id,
   isOpen,
-}: {
-  onRequestCloseDeleteModal: VoidFunction;
-  closePreviousModal: VoidFunction;
-  user: string;
-  id: string;
-  isOpen: boolean;
-}) => {
+}: ItemDeleteModalProps) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.700' };
   const color = { light: 'black', dark: 'white' };

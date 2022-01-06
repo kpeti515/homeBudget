@@ -10,19 +10,14 @@ import {
 } from '@chakra-ui/react';
 
 import { IncomeForm } from './IncomeForm';
-import { IncomeItemType } from '../helpers/interfaces';
+import { IncomeModalProps } from '../helpers/interfaces';
 
-export const IncomeModal = ({
+export const IncomeModal: React.FC<IncomeModalProps> = ({
   isOpen,
   onRequestClose,
   defaultValues,
   user,
-}: {
-  isOpen: boolean;
-  onRequestClose: VoidFunction;
-  defaultValues?: IncomeItemType;
-  user: string;
-}) => {
+}: IncomeModalProps) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };

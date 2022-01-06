@@ -14,10 +14,14 @@ import '../css/BudgetItem.css';
 import { EditIcon } from '@chakra-ui/icons';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
-import { BudgetItemType } from '../helpers/interfaces';
+import {
+  AccountParam,
+  BudgetItemProps,
+  BudgetItemType,
+} from '../helpers/interfaces';
 
 const RegularBudgetItem = ({ budget }: { budget: BudgetItemType }) => {
-  const { account } = useParams<{ account: string }>();
+  const { account } = useParams<AccountParam>();
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -63,15 +67,11 @@ const RegularBudgetItem = ({ budget }: { budget: BudgetItemType }) => {
   );
 };
 
-export const BudgetItem = ({
+export const BudgetItem: React.FC<BudgetItemProps> = ({
   budget,
   showExpenses,
   showIncomes,
-}: {
-  budget: BudgetItemType;
-  showExpenses: boolean;
-  showIncomes: boolean;
-}) => {
+}: BudgetItemProps) => {
   if ('income' in budget && showIncomes) {
     return <RegularBudgetItem budget={budget} />;
   }

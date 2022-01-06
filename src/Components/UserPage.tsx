@@ -19,9 +19,10 @@ import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
 import BudgetHistory from './BudgetHistory';
 import { useTypedSelector } from '../store/store';
+import { AccountParam } from '../helpers/interfaces';
 
-export const UserPage = () => {
-  const { account } = useParams<{ account: string }>();
+export const UserPage: React.FC = () => {
+  const { account } = useParams<AccountParam>();
 
   const dispatch = useDispatch();
   const budget = useTypedSelector(selectBudgetAccount);

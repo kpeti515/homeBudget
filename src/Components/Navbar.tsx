@@ -6,6 +6,7 @@ import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logout, selectCurrentUser } from '../store/user/userSlice';
 import { useTypedSelector } from '../store/store';
+import { NavbarProps } from '../helpers/interfaces';
 
 const MenuItems = ({ children }: { children: React.ReactNode }) => (
   <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
@@ -13,13 +14,10 @@ const MenuItems = ({ children }: { children: React.ReactNode }) => (
   </Text>
 );
 
-export const Navbar = ({
+export const Navbar: React.FC<NavbarProps> = ({
   colorMode,
   toggleColorMode,
-}: {
-  colorMode: string;
-  toggleColorMode: () => void;
-}) => {
+}: NavbarProps) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
   const dispatch = useDispatch();

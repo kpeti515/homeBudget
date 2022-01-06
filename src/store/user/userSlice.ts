@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { getAuth, signOut } from 'firebase/auth';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../../helpers/interfaces';

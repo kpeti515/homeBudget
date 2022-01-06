@@ -18,30 +18,24 @@ import { useDispatch } from 'react-redux';
 import { ItemDeleteModal } from './ItemDeleteModal';
 import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
 import { getToday } from '../helpers/functions/dateHelpers';
-import { ExpenseItemType } from '../helpers/interfaces';
+import {
+  AccountParam,
+  ExpenseFormProps,
+  ExpenseItemForm,
+} from '../helpers/interfaces';
 
-export const ExpenseForm = ({
+export const ExpenseForm: React.FC<ExpenseFormProps> = ({
   defaultValues,
   user,
   onRequestClose,
-}: {
-  defaultValues?: ExpenseItemType;
-  user: string;
-  onRequestClose: () => void;
-}) => {
+}: ExpenseFormProps) => {
   const { handleSubmit, register } = useForm();
-  const { account } = useParams<{ account: string }>();
+  const { account } = useParams<AccountParam>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
   const toast = useToast();
-  const onSubmit = (data: {
-    expense: string;
-    item: string;
-    description: string;
-    date: string;
-    isIncomeForCloth?: boolean;
-  }) => {
+  const onSubmit = (data: ExpenseItemForm) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
     const inputs = {
