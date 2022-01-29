@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-import PropTypes from 'prop-types';
 import {
   useColorMode,
   Modal,
@@ -10,13 +8,14 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import { ExpenseForm } from './ExpenseForm';
+import { ExpenseModalProps } from '../helpers/interfaces';
 
-export const ExpenseModal = ({
+export const ExpenseModal: React.FC<ExpenseModalProps> = ({
   isOpen,
   onRequestClose,
   user,
   defaultValues,
-}) => {
+}: ExpenseModalProps) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };
@@ -33,23 +32,9 @@ export const ExpenseModal = ({
             user={user}
             onRequestClose={onRequestClose}
             defaultValues={defaultValues}
-            isOpen={isOpen}
           />
         </ModalBody>
       </ModalContent>
     </Modal>
   );
-};
-
-ExpenseForm.propTypes = {
-  defaultValues: PropTypes.shape({
-    id: PropTypes.string,
-    income: PropTypes.string,
-    reason: PropTypes.string,
-    isIncomeForCloth: PropTypes.bool,
-    date: PropTypes.string,
-  }),
-  user: PropTypes.string,
-  onRequestClose: PropTypes.func,
-  isOpen: PropTypes.bool,
 };

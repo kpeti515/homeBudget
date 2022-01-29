@@ -4,22 +4,33 @@
     "es2021": true,
     "jest": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "plugins": ["react", "prettier", "jest"],
+  "plugins": ["react", "prettier", "jest", "@typescript-eslint"],
   "rules": {
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
     "implicit-arrow-linebreak": "off",
     "indent": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "operator-linebreak": "off",
     "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
     "object-curly-newline": "off",
     "no-unused-vars": "warn",
     "no-unused-expressions": [
@@ -28,8 +39,16 @@
         "allowTernary": true
       }
     ],
+    "@typescript-eslint/no-unused-expressions": [
+      "error",
+      { "allowTernary": true }
+    ],
     "react/jsx-one-expression-per-line": "off",
     "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [
+      2,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
     "func-names": ["error", "as-needed"],
     "linebreak-style": "off",
     "react/function-component-definition": [

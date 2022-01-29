@@ -8,16 +8,17 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navbar } from './Components/Navbar';
 import { UserPage } from './Components/UserPage';
 import { Login } from './Components/Login';
 import { login, selectCurrentUser } from './store/user/userSlice';
 import { LoadingPage } from './Components/LoadingPage';
+import { useTypedSelector } from './store/store';
 
-export const App = () => {
+export const App: React.FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const user = useSelector(selectCurrentUser);
+  const user = useTypedSelector(selectCurrentUser);
   const auth = getAuth();
   const dispatch = useDispatch();
 
@@ -28,7 +29,7 @@ export const App = () => {
       }
       setIsLoading(false);
     });
-  }, [user]);
+  }, [auth, dispatch, user]);
 
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'black' };

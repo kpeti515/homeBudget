@@ -6,7 +6,7 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 
-export const Login = () => {
+export const Login: React.FC = () => {
   const provider = new GoogleAuthProvider();
   const fbProvider = new FacebookAuthProvider();
   const auth = getAuth();

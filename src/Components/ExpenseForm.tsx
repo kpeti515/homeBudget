@@ -1,8 +1,4 @@
-/* eslint-disable react/require-default-props */
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Box,
   Button,
@@ -14,33 +10,45 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 
 import { ItemDeleteModal } from './ItemDeleteModal';
 import { addBudgetItem, updateBudgetItem } from '../store/budget/budgetSlice';
 import { getToday } from '../helpers/functions/dateHelpers';
+import {
+  AccountParam,
+  ExpenseFormProps,
+  ExpenseItemForm,
+} from '../helpers/interfaces';
 
-export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
+export const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  defaultValues,
+  user,
+  onRequestClose,
+}: ExpenseFormProps) => {
   const { handleSubmit, register } = useForm();
-  const { account } = useParams();
-
-  const { isOpen, onOpen, onClose } = useDisclosure(); // deleteModal
+  const { account } = useParams<AccountParam>();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
 
   const toast = useToast();
-  const dispatch = useDispatch();
-  const onSubmit = (data) => {
+  const onSubmit = (data: ExpenseItemForm) => {
     const itemName = defaultValues ? defaultValues.id : uuidv4();
 
     const inputs = {
-      income: data.income,
-      reason: data.reason,
+      expense: data.expense,
+      item: data.item,
+      description: data.description,
       date: data.date,
       isIncomeForCloth: !!data.isIncomeForCloth,
     };
     defaultValues
       ? dispatch(updateBudgetItem({ userName: user, itemName, inputs }))
       : dispatch(addBudgetItem({ userName: user, itemName, inputs }));
+
     onRequestClose();
     toast({
       title: 'Mentve.',
@@ -49,33 +57,43 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
       isClosable: true,
     });
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl isRequired my={2}>
-        <FormLabel htmlFor="income">Összeg:</FormLabel>
+        <FormLabel htmlFor="expense">Összeg:</FormLabel>
         <Input
-          defaultValue={defaultValues && defaultValues.income}
-          id="income"
+          defaultValue={defaultValues && defaultValues.expense}
+          id="expense"
+          placeholder="Kiadás összege"
           type="number"
-          placeholder="Bevétel összege"
           ref={register}
-          required
+          name="expense"
           autoFocus
-          name="income"
         />
       </FormControl>
 
       <FormControl isRequired my={2}>
-        <FormLabel htmlFor="reason">Magyarázat</FormLabel>
+        <FormLabel htmlFor="item">Tárgy</FormLabel>
         <Input
-          id="reason"
-          defaultValue={defaultValues && defaultValues.reason}
+          id="item"
+          defaultValue={defaultValues && defaultValues.item}
           type="text"
-          placeholder="Magyarázat"
+          placeholder="Tárgy"
           ref={register}
           required
-          name="reason"
+          name="item"
+        />
+      </FormControl>
+
+      <FormControl my={2}>
+        <FormLabel htmlFor="description">Megjegyzés</FormLabel>
+        <Input
+          id="description"
+          defaultValue={defaultValues && defaultValues.description}
+          type="text"
+          placeholder="Megjegyzés"
+          ref={register}
+          name="description"
         />
       </FormControl>
 
@@ -91,6 +109,7 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
           ref={register}
         />
       </FormControl>
+
       {account === 'Lóri' && (
         <Checkbox
           defaultIsChecked={defaultValues && defaultValues.isIncomeForCloth}
@@ -142,16 +161,4 @@ export const IncomeForm = ({ defaultValues, user, onRequestClose }) => {
       </Box>
     </form>
   );
-};
-
-IncomeForm.propTypes = {
-  defaultValues: PropTypes.shape({
-    id: PropTypes.string,
-    income: PropTypes.string,
-    reason: PropTypes.string,
-    isIncomeForCloth: PropTypes.bool,
-    date: PropTypes.string,
-  }),
-  user: PropTypes.string,
-  onRequestClose: PropTypes.func,
 };

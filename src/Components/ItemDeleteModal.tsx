@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Box,
   Button,
@@ -15,14 +14,15 @@ import {
 import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { deleteBudgetItem } from '../store/budget/budgetSlice';
+import { ItemDeleteModalProps } from '../helpers/interfaces';
 
-export const ItemDeleteModal = ({
+export const ItemDeleteModal: React.FC<ItemDeleteModalProps> = ({
   onRequestCloseDeleteModal,
   closePreviousModal,
   user,
   id,
   isOpen,
-}) => {
+}: ItemDeleteModalProps) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.700' };
   const color = { light: 'black', dark: 'white' };
@@ -33,7 +33,7 @@ export const ItemDeleteModal = ({
     onRequestCloseDeleteModal();
     closePreviousModal();
 
-    dispatch(deleteBudgetItem({ userName: user, itemId: id }));
+    dispatch(deleteBudgetItem({ userName: user, itemName: id }));
 
     toast({
       title: 'Törölve.',
@@ -44,14 +44,7 @@ export const ItemDeleteModal = ({
   };
 
   return (
-    <Modal
-      bg={bgColor[colorMode]}
-      color={color[colorMode]}
-      isOpen={isOpen}
-      contentLabel="Elem törlése"
-      onClose={onRequestCloseDeleteModal}
-      closePreviousModal={closePreviousModal}
-    >
+    <Modal isOpen={isOpen} onClose={onRequestCloseDeleteModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
@@ -83,12 +76,4 @@ export const ItemDeleteModal = ({
       </ModalContent>
     </Modal>
   );
-};
-
-ItemDeleteModal.propTypes = {
-  id: PropTypes.string.isRequired,
-  onRequestCloseDeleteModal: PropTypes.func.isRequired,
-  closePreviousModal: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.string.isRequired,
 };

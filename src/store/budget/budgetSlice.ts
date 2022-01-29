@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import {
   collection,
   getDocs,
@@ -8,15 +7,21 @@ import {
 } from 'firebase/firestore';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { budgetDb } from '../../firebase/firebase';
+import {
+  BudgetForm,
+  BudgetFormType,
+  BudgetState,
+} from '../../helpers/interfaces';
+import { RootState } from '../store';
 
 export const fetchBudget = createAsyncThunk(
   'budgets/fetchBudgets',
-  async (userId) => {
+  async (userId: string) => {
     const budgetCollection = collection(budgetDb, userId);
     const budgetSnapshot = await getDocs(budgetCollection);
     const budgetList = budgetSnapshot.docs.map((document) => ({
       id: document.id,
-      ...document.data(),
+      ...(document.data() as BudgetFormType),
     }));
     return { budgetList, userId };
   }
@@ -24,7 +29,7 @@ export const fetchBudget = createAsyncThunk(
 
 export const addBudgetItem = createAsyncThunk(
   'budgets/addBudgetItem',
-  async ({ userName, itemName, inputs }) => {
+  async ({ userName, itemName, inputs }: BudgetForm) => {
     await setDoc(doc(budgetDb, userName, itemName), inputs);
     return { userName, itemName, inputs };
   }
@@ -32,7 +37,7 @@ export const addBudgetItem = createAsyncThunk(
 
 export const updateBudgetItem = createAsyncThunk(
   'budgets/updateBudgetItem',
-  async ({ userName, itemName, inputs }) => {
+  async ({ userName, itemName, inputs }: BudgetForm) => {
     await setDoc(doc(budgetDb, userName, itemName), inputs);
     return { userName, itemName, inputs };
   }
@@ -40,19 +45,21 @@ export const updateBudgetItem = createAsyncThunk(
 
 export const deleteBudgetItem = createAsyncThunk(
   'budgets/deleteBudgetItem',
-  async ({ userName, itemId }) => {
-    await deleteDoc(doc(budgetDb, userName, itemId));
-    return { userName, itemId };
+  async ({ userName, itemName }: BudgetForm) => {
+    await deleteDoc(doc(budgetDb, userName, itemName));
+    return { userName, itemName };
   }
 );
 
+const initialState = {
+  status: 'idle',
+  accounts: {},
+  error: undefined,
+} as BudgetState;
+
 export const budgetSlice = createSlice({
   name: 'budget',
-  initialState: {
-    status: 'idle',
-    accounts: {},
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers(builder) {
     builder
@@ -77,7 +84,10 @@ export const budgetSlice = createSlice({
         state.status = 'succeeded';
         state.accounts[action.payload.userName] = [
           ...state.accounts[action.payload.userName],
-          { id: action.payload.itemName, ...action.payload.inputs },
+          {
+            id: action.payload.itemName,
+            ...(action.payload.inputs as BudgetFormType),
+          },
         ];
       })
       .addCase(addBudgetItem.rejected, (state, action) => {
@@ -93,7 +103,10 @@ export const budgetSlice = createSlice({
           action.payload.userName
         ].map((document) => {
           if (document.id === action.payload.itemName) {
-            return { id: action.payload.itemName, ...action.payload.inputs };
+            return {
+              id: action.payload.itemName,
+              ...(action.payload.inputs as BudgetFormType),
+            };
           }
           return document;
         });
@@ -109,7 +122,7 @@ export const budgetSlice = createSlice({
         state.status = 'succeeded';
         state.accounts[action.payload.userName] = state.accounts[
           action.payload.userName
-        ].filter((document) => document.id !== action.payload.itemId);
+        ].filter((document) => document.id !== action.payload.itemName);
       })
       .addCase(deleteBudgetItem.rejected, (state, action) => {
         state.status = 'failed';
@@ -120,4 +133,4 @@ export const budgetSlice = createSlice({
 
 export default budgetSlice.reducer;
 
-export const selectBudgetAccount = (state) => state.budget.accounts;
+export const selectBudgetAccount = (state: RootState) => state.budget.accounts;

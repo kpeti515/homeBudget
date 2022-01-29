@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {
   Button,
   Stat,
@@ -15,9 +14,14 @@ import '../css/BudgetItem.css';
 import { EditIcon } from '@chakra-ui/icons';
 import { ExpenseModal } from './ExpenseModal';
 import { IncomeModal } from './IncomeModal';
+import {
+  AccountParam,
+  BudgetItemProps,
+  BudgetItemType,
+} from '../helpers/interfaces';
 
-const RegularBudgetItem = ({ type, budget }) => {
-  const { account } = useParams();
+const RegularBudgetItem = ({ budget }: { budget: BudgetItemType }) => {
+  const { account } = useParams<AccountParam>();
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -25,13 +29,13 @@ const RegularBudgetItem = ({ type, budget }) => {
     <>
       <Stat border="2px" borderColor="gray.200" borderRadius="md" m={3} mx={6}>
         <StatLabel ml={2}>
-          {type === 'expense' ? budget.item : budget.reason}
+          {'expense' in budget ? budget.item : budget.reason}
         </StatLabel>
         <Box className="display__flex" justifyContent="space-between">
           <StatNumber ml={4} fontSize={20}>
-            {type === 'expense'
-              ? `-${Number(budget.expense).toLocaleString('HU')} Ft`
-              : `+${Number(budget.income).toLocaleString('HU')} Ft`}
+            {'expense' in budget
+              ? `-${Number(budget.expense).toLocaleString('hu')} Ft`
+              : `+${Number(budget.income).toLocaleString('hu')} Ft`}
           </StatNumber>
           <Button
             leftIcon={<EditIcon />}
@@ -44,7 +48,7 @@ const RegularBudgetItem = ({ type, budget }) => {
         </Box>
         <StatHelpText ml={2}>{budget.date}</StatHelpText>
       </Stat>
-      {type === 'expense' ? (
+      {'expense' in budget ? (
         <ExpenseModal
           user={account}
           defaultValues={budget}
@@ -63,35 +67,16 @@ const RegularBudgetItem = ({ type, budget }) => {
   );
 };
 
-export const BudgetItem = ({ budget, showExpenses, showIncomes }) => {
-  if (budget.income && showIncomes === true) {
-    return <RegularBudgetItem type="income" budget={budget} />;
+export const BudgetItem: React.FC<BudgetItemProps> = ({
+  budget,
+  showExpenses,
+  showIncomes,
+}: BudgetItemProps) => {
+  if ('income' in budget && showIncomes) {
+    return <RegularBudgetItem budget={budget} />;
   }
-  if (budget.expense && showExpenses === true) {
-    return <RegularBudgetItem type="expense" budget={budget} />;
+  if ('expense' in budget && showExpenses) {
+    return <RegularBudgetItem budget={budget} />;
   }
   return null;
-};
-
-BudgetItem.propTypes = {
-  budget: PropTypes.shape({
-    reason: PropTypes.string,
-    income: PropTypes.string,
-    expense: PropTypes.string,
-    date: PropTypes.string,
-    item: PropTypes.string,
-  }).isRequired,
-  showExpenses: PropTypes.bool.isRequired,
-  showIncomes: PropTypes.bool.isRequired,
-};
-
-RegularBudgetItem.propTypes = {
-  budget: PropTypes.shape({
-    reason: PropTypes.string,
-    income: PropTypes.string,
-    expense: PropTypes.string,
-    date: PropTypes.string,
-    item: PropTypes.string,
-  }).isRequired,
-  type: PropTypes.string.isRequired,
 };

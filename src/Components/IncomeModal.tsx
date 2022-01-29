@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-import PropTypes from 'prop-types';
 import {
   useColorMode,
   Modal,
@@ -11,23 +10,19 @@ import {
 } from '@chakra-ui/react';
 
 import { IncomeForm } from './IncomeForm';
+import { IncomeModalProps } from '../helpers/interfaces';
 
-export const IncomeModal = ({
+export const IncomeModal: React.FC<IncomeModalProps> = ({
   isOpen,
   onRequestClose,
   defaultValues,
   user,
-}) => {
+}: IncomeModalProps) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: 'white', dark: 'gray.900' };
   const color = { light: 'black', dark: 'white' };
   return (
-    <Modal
-      bg={bgColor[colorMode]}
-      color={color[colorMode]}
-      isOpen={isOpen}
-      onClose={onRequestClose}
-    >
+    <Modal isOpen={isOpen} onClose={onRequestClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader bg={bgColor[colorMode]} color={color[colorMode]}>
@@ -36,7 +31,6 @@ export const IncomeModal = ({
         <ModalCloseButton bg={bgColor[colorMode]} color={color[colorMode]} />
         <ModalBody bg={bgColor[colorMode]} color={color[colorMode]}>
           <IncomeForm
-            isOpen={isOpen}
             onRequestClose={onRequestClose}
             defaultValues={defaultValues}
             user={user}
@@ -45,17 +39,4 @@ export const IncomeModal = ({
       </ModalContent>
     </Modal>
   );
-};
-
-IncomeModal.propTypes = {
-  defaultValues: PropTypes.shape({
-    id: PropTypes.string,
-    income: PropTypes.string,
-    reason: PropTypes.string,
-    isIncomeForCloth: PropTypes.bool,
-    date: PropTypes.string,
-  }),
-  user: PropTypes.string,
-  onRequestClose: PropTypes.func,
-  isOpen: PropTypes.bool,
 };
